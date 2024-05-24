@@ -1,4 +1,4 @@
-defmodule BookMyGigs.Accounts.Account do
+defmodule BookMyGigs.Accounts.Storage.Account do
   @moduledoc """
   The Ecto Schema for an Account
   """

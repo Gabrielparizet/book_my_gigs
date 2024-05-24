@@ -1,19 +1,30 @@
-defmodule BookMyGigsWeb.Accounts.AccountsController do
+defmodule BookMyGigsWeb.AccountsController do
   @moduledoc """
   The Accounts Controller
   """
-
-  alias BookMyGigsWeb.Accounts.Storage
-
   use BookMyGigsWeb, :controller
+  use OpenApiSpex.ControllerSpecs
 
-  def create(conn, %{"account" => account_params}) do
-    with  {:ok, %Storage.Account{} = account} <- Accounts.create_account(account_params),
-          {:ok, token, _full_claims} <- Guardian.encode_and_sign(account) do
+  alias BookMyGigs.Accounts
+  alias BookMyGigsWeb.Accounts.Schemas
 
-      conn
-      |> put_status(:created)
-      |> send_resp(200, "Account successfully created")
-    end
+  operation(:create,
+    summary: "Create account input",
+    request_body: {"Create account input", "application/json", Schemas.CreateAccountInput},
+    responses: [
+      ok: {"Create account response", "application/json", Schemas.CreateAccountResponse},
+      bad_request: "Invalid input values"
+    ],
+    ok: "Account successfully created"
+  )
+  def create(conn, params) do
+    account =
+      params
+      |> Accounts.create_account()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(201, account)
   end
 end
