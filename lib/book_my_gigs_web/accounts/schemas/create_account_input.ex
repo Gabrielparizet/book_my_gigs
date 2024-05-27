@@ -1,4 +1,4 @@
-defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountInput do
+defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountParams do
   @moduledoc """
   Specs describing the valid inout values to create an account.
   """
@@ -8,13 +8,13 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountInput do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Create account input",
+    title: "Create account params",
     description: "Valid input values to create an account",
     type: :object,
     properties: %{
       account: %Schema{
         type: :object,
-        additionalProperties: %{
+        properties: %{
           email: %Schema{
             type: :string,
             format: :email
@@ -25,9 +25,12 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountInput do
         }
       }
     },
-    example: %{
+    example:
+  %{
+    "account" => %{
       "email" => "test@gmail.com",
-      "password" => "ThisIsMyPassword123?"
+      "hash_password" => "ThisIsMyPassword123?"
     }
+  }
   })
 end

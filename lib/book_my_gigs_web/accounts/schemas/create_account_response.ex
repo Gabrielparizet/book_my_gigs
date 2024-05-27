@@ -14,10 +14,9 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountResponse do
     properties: %{
       account: %Schema{
         type: :object,
-        additionalProperties: %{
+        properties: %{
           email: %Schema{
             type: :string,
-            format: :email
           },
           password: %Schema{
             type: :string,
@@ -27,7 +26,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountResponse do
     },
     example: %{
       "email" => "test@gmail.com",
-      "password" => "ThisIsMyPassword123?"
+      "hash_password" => "ThisIsMyPassword123?"
     }
   })
 end

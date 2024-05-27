@@ -10,7 +10,7 @@ defmodule BookMyGigsWeb.AccountsController do
 
   operation(:create,
     summary: "Create account input",
-    request_body: {"Create account input", "application/json", Schemas.CreateAccountInput},
+    request_body: {"Create account input", "application/json", Schemas.CreateAccountParams},
     responses: [
       ok: {"Create account response", "application/json", Schemas.CreateAccountResponse},
       bad_request: "Invalid input values"
