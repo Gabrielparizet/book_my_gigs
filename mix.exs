@@ -9,7 +9,15 @@ defmodule BookMyGigs.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls, export: "cov"],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.cobertura": :test
+      ]
     ]
   end
 
@@ -60,6 +68,7 @@ defmodule BookMyGigs.MixProject do
       {:bandit, "~> 1.2"},
       {:guardian, "~> 2.0"},
       {:open_api_spex, "~> 3.11"},
+      {:excoveralls, "~> 0.18", only: :test}
     ]
   end
 
