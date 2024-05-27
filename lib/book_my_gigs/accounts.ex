@@ -20,6 +20,11 @@ defmodule BookMyGigs.Accounts do
     }
 
   end
+
+  def get_accounts() do
+    Storage.get_accounts()
+  end
+
   def create_account(%{"account" => account_params}) do
     Storage.create_account(account_params)
   end

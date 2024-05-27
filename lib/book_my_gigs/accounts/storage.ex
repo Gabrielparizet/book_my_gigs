@@ -7,6 +7,12 @@ defmodule BookMyGigs.Accounts.Storage do
   alias BookMyGigs.Accounts.Storage
   alias BookMyGigs.Repo
 
+  def get_accounts do
+    Storage.Account
+    |> Repo.all()
+    |> Enum.map(&to_context_struct/1)
+  end
+
   def create_account(params) do
     params = %{
       email: params["email"],

@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountParams do
   @moduledoc """
-  Specs describing the valid inout values to create an account.
+  Specs describing the valid input values to create an account.
   """
 
   alias OpenApiSpex.Schema

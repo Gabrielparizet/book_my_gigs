@@ -8,8 +8,27 @@ defmodule BookMyGigsWeb.AccountsController do
   alias BookMyGigs.Accounts
   alias BookMyGigsWeb.Accounts.Schemas
 
+  operation(:get,
+    summary: "Get all accounts",
+    responses: [
+      ok: {"Create account response", "application/json", Schemas.CreateAccountResponse}
+    ],
+    ok: "Accounts successfully found"
+  )
+
+  def get(conn, _params) do
+    accounts =
+      Accounts.get_accounts()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, accounts)
+
+  end
+
   operation(:create,
-    summary: "Create account input",
+    summary: "Create an account",
     request_body: {"Create account input", "application/json", Schemas.CreateAccountParams},
     responses: [
       ok: {"Create account response", "application/json", Schemas.CreateAccountResponse},

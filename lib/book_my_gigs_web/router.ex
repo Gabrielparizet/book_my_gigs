@@ -22,6 +22,7 @@ defmodule BookMyGigsWeb.Router do
 
   scope "/api", BookMyGigsWeb do
     pipe_through :api
+    get "/accounts", AccountsController, :get
     post "/accounts", AccountsController, :create
   end
 
