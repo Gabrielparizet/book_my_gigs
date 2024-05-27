@@ -13,8 +13,8 @@ defmodule BookMyGigs.Accounts.Storage do
       hash_password: params["hash_password"]
     }
 
-    Storage.Account
-    |> struct(params)
+    %Storage.Account{}
+    |> Storage.Account.changeset(params)
     |> Repo.insert!()
     |> to_context_struct()
   end

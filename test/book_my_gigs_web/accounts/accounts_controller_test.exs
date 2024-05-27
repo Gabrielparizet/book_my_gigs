@@ -11,7 +11,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     account_payload = %{
       "account" => %{
         "email" => "test@email.com",
-        "hash_password" => "ThisIsMyPassword123",
+        "hash_password" => "ThisIsMyPassword123?",
       }
     }
 
@@ -20,12 +20,12 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     conn_out =
       conn
       |> put_req_header("content-type", "application/json")
-      |> post("/accounts/register", account_payload)
+      |> post("/api/accounts", account_payload)
 
     json_data = json_response(conn_out, 201)
     assert json_data == %{
       "email" => "test@email.com",
-      "hash_password" => "ThisIsMyPassword123",
+      "hash_password" => "ThisIsMyPassword123?",
     }
 
     TestAssertions.assert_schema(json_data, "Create account response", api_spec)

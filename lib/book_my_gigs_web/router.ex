@@ -20,9 +20,9 @@ defmodule BookMyGigsWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/accounts", BookMyGigsWeb do
+  scope "/api", BookMyGigsWeb do
     pipe_through :api
-    post "/register", AccountsController, :create
+    post "/accounts", AccountsController, :create
   end
 
   # Other scopes may use custom stacks.

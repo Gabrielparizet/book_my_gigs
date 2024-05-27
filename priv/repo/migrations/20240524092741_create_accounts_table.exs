@@ -10,6 +10,6 @@ defmodule BookMyGigs.Repo.Migrations.CreateAccountsTable do
       timestamps(type: :utc_datetime)
     end
 
-    create unique_index(:accounts, [:id, :email])
+    create unique_index(:accounts, [:email])
   end
 end
