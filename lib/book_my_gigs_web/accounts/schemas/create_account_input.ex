@@ -25,12 +25,11 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountParams do
         }
       }
     },
-    example:
-  %{
-    "account" => %{
-      "email" => "test@gmail.com",
-      "hash_password" => "ThisIsMyPassword123?"
+    example: %{
+      "account" => %{
+        "email" => "test@gmail.com",
+        "hash_password" => "ThisIsMyPassword123?"
+      }
     }
-  }
   })
 end

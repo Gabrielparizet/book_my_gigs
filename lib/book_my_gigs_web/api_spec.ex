@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.ApiSpec do
-
-  alias OpenApiSpex.{Info, OpenApi, Paths, Server} #Components
+  # Components
+  alias OpenApiSpex.{Info, OpenApi, Paths, Server}
   alias BookMyGigsWeb.{Endpoint, Router}
   @behaviour OpenApi
 
@@ -18,6 +18,7 @@ defmodule BookMyGigsWeb.ApiSpec do
       # Populate the paths from a phoenix router
       paths: Paths.from_router(Router)
     }
-    |> OpenApiSpex.resolve_schema_modules() # Discover request/response schemas from path specs
+    # Discover request/response schemas from path specs
+    |> OpenApiSpex.resolve_schema_modules()
   end
 end

@@ -13,15 +13,15 @@ defmodule BookMyGigsWeb.Accounts.Schemas.GetAccountsResponse do
     type: :array,
     items: %Schema{
       type: :object,
-      properties: [
+      properties: %{
         email: %Schema{
-          type: :string,
+          type: :string
         },
         hash_password: %Schema{
-          type: :string,
+          type: :string
         }
-      ]
-      },
+      }
+    },
     example: [
       %{
         "email" => "test@email.com",

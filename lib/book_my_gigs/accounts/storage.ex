@@ -28,5 +28,4 @@ defmodule BookMyGigs.Accounts.Storage do
   defp to_context_struct(%Storage.Account{} = index_db),
     do: struct(Accounts.Account, Map.from_struct(index_db))
 
-  defp to_context_struct(nil), do: nil
 end

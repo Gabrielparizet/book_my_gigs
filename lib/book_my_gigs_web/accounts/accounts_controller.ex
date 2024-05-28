@@ -11,7 +11,7 @@ defmodule BookMyGigsWeb.AccountsController do
   operation(:get,
     summary: "Get all accounts",
     responses: [
-      ok: {"Create account response", "application/json", Schemas.CreateAccountResponse}
+      ok: {"Get accounts response", "application/json", Schemas.GetAccountsResponse}
     ],
     ok: "Accounts successfully found"
   )
@@ -24,7 +24,6 @@ defmodule BookMyGigsWeb.AccountsController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, accounts)
-
   end
 
   operation(:create,
@@ -36,6 +35,7 @@ defmodule BookMyGigsWeb.AccountsController do
     ],
     ok: "Account successfully created"
   )
+
   def create(conn, params) do
     account =
       params
