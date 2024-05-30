@@ -24,6 +24,7 @@ defmodule BookMyGigsWeb.Router do
     pipe_through :api
     get "/accounts", AccountsController, :get
     post "/accounts", AccountsController, :create
+    put "/accounts/:id", AccountsController, :update
   end
 
   # Other scopes may use custom stacks.

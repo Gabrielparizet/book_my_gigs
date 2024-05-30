@@ -7,6 +7,7 @@ defmodule BookMyGigsWeb.AccountsController do
 
   alias BookMyGigs.Accounts
   alias BookMyGigsWeb.Accounts.Schemas
+  alias OpenApiSpex.Schema
 
   operation(:get,
     summary: "Get all accounts",
@@ -45,5 +46,36 @@ defmodule BookMyGigsWeb.AccountsController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(201, account)
+  end
+
+  operation(:update,
+    summary: "Update an account",
+    parameters: [
+      account_id: [
+        in: :path,
+        description: "Account id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    request_body: {"Update account input", "application/json", Schemas.UpdateAccountInput},
+    responses: [
+      ok: {"Create account response", "application/json", Schemas.CreateAccountresponse},
+      bad_request: "Invalid input values"
+    ],
+    ok: "Accounts successfully updated"
+  )
+
+  def update(conn, params) do
+    account_id = conn.path_params["id"]
+
+    updated_account =
+      params
+      |> Accounts.update_account(account_id)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(204, updated_account)
   end
 end

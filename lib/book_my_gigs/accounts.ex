@@ -15,10 +15,9 @@ defmodule BookMyGigs.Accounts do
     defstruct [:email, :hash_password]
 
     @type t :: %__MODULE__{
-      email: String.t(),
-      hash_password: String.t()
-    }
-
+            email: String.t(),
+            hash_password: String.t()
+          }
   end
 
   def get_accounts() do
@@ -27,5 +26,9 @@ defmodule BookMyGigs.Accounts do
 
   def create_account(%{"account" => account_params}) do
     Storage.create_account(account_params)
+  end
+
+  def update_account(%{"account" => account_params}, account_id) do
+    Storage.update_account(account_params, account_id)
   end
 end

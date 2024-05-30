@@ -25,7 +25,12 @@ defmodule BookMyGigs.Accounts.Storage do
     |> to_context_struct()
   end
 
-  defp to_context_struct(%Storage.Account{} = index_db),
-    do: struct(Accounts.Account, Map.from_struct(index_db))
+  def update_account(params, account_id) do
+    IO.inspect(params, label: "params")
+    IO.inspect(account_id, label: "account_id")
+  end
 
+  defp to_context_struct(%Storage.Account{} = index_db) do
+    struct(Accounts.Account, Map.from_struct(index_db))
+  end
 end
