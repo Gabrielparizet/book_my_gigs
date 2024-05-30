@@ -1,4 +1,6 @@
 defmodule BookMyGigsWeb.ApiSpec do
+  @moduledoc false
+
   # Components
   alias OpenApiSpex.{Info, OpenApi, Paths, Server}
   alias BookMyGigsWeb.{Endpoint, Router}
