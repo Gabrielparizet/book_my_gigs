@@ -1,14 +1,11 @@
-defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountInput do
-  @moduledoc """
-  Specs describing the valid input values to create an account.
-  """
-
+defmodule BookMyGigsWeb.Accounts.Schemas.UpdateAccountInput do
+  @moduledoc false
   alias OpenApiSpex.Schema
 
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Create account input",
+    title: "Update account input",
     description: "Valid input values to create an account",
     type: :object,
     properties: %{
@@ -22,7 +19,9 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountInput do
           hash_password: %Schema{
             type: :string
           }
-        }
+        },
+        required: [],
+        additionalProperties: false
       }
     },
     example: %{

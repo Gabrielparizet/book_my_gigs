@@ -29,9 +29,9 @@ defmodule BookMyGigsWeb.AccountsController do
 
   operation(:create,
     summary: "Create an account",
-    request_body: {"Create account input", "application/json", Schemas.CreateAccountParams},
+    request_body: {"Create account input", "application/json", Schemas.CreateAccountInput},
     responses: [
-      ok: {"Create account response", "application/json", Schemas.CreateAccountResponse},
+      ok: {"Account response", "application/json", Schemas.AccountResponse},
       bad_request: "Invalid input values"
     ],
     ok: "Account successfully created"
@@ -60,7 +60,7 @@ defmodule BookMyGigsWeb.AccountsController do
     ],
     request_body: {"Update account input", "application/json", Schemas.UpdateAccountInput},
     responses: [
-      ok: {"Create account response", "application/json", Schemas.CreateAccountresponse},
+      ok: {"Account response", "application/json", Schemas.AccountResponse},
       bad_request: "Invalid input values"
     ],
     ok: "Accounts successfully updated"
@@ -76,6 +76,6 @@ defmodule BookMyGigsWeb.AccountsController do
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(204, updated_account)
+    |> send_resp(200, updated_account)
   end
 end

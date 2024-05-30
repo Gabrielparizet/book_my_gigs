@@ -1,4 +1,4 @@
-defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountResponse do
+defmodule BookMyGigsWeb.Accounts.Schemas.AccountResponse do
   @moduledoc """
     Specs describing the response when creating an account.
   """
@@ -8,7 +8,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountResponse do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Create account response",
+    title: "Account response",
     description: "Schema describing the response when creating an account",
     type: :object,
     properties: %{
@@ -16,10 +16,10 @@ defmodule BookMyGigsWeb.Accounts.Schemas.CreateAccountResponse do
         type: :object,
         properties: %{
           email: %Schema{
-            type: :string,
+            type: :string
           },
           password: %Schema{
-            type: :string,
+            type: :string
           }
         }
       }

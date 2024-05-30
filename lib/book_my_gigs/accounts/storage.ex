@@ -26,8 +26,15 @@ defmodule BookMyGigs.Accounts.Storage do
   end
 
   def update_account(params, account_id) do
-    IO.inspect(params, label: "params")
-    IO.inspect(account_id, label: "account_id")
+    params =
+      params
+      |> Map.take(["email", "hash_password"])
+      |> Enum.into(%{}, fn {key, value} -> {String.to_atom(key), value} end)
+
+    %Storage.Account{id: account_id}
+    |> Storage.Account.changeset(params)
+    |> Repo.update!()
+    |> to_context_struct()
   end
 
   defp to_context_struct(%Storage.Account{} = index_db) do

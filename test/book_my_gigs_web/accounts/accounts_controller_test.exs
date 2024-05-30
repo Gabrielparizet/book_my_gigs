@@ -41,7 +41,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       }
     }
 
-    TestAssertions.assert_schema(account_payload, "Create account params", api_spec)
+    TestAssertions.assert_schema(account_payload, "Create account input", api_spec)
 
     conn_out =
       conn
@@ -55,6 +55,6 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
              "hash_password" => "ThisIsMyPassword123?"
            }
 
-    TestAssertions.assert_schema(json_data, "Create account response", api_spec)
+    TestAssertions.assert_schema(json_data, "Account response", api_spec)
   end
 end
