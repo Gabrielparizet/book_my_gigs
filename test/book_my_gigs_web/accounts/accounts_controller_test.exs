@@ -65,7 +65,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     %Storage.Account{
       email: "test@gmail.com",
-      hash_password: "ThisIsMyPassword123"
+      hash_password: "ThisIsMyPassword123?"
     }
     |> Repo.insert!()
 
@@ -80,22 +80,24 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     account_payload = %{
       "account" => %{
-        "email" => "modified_email@gmail.com"
+        "email" => "modified_email@gmail.com",
+        "hash_password" => "MyModifiedPassword123?"
       }
     }
 
     conn_out =
       conn
       |> put_req_header("content-type", "application/json")
-      |> post("/api/accounts/:#{account_id}", account_payload)
+      |> put("/api/accounts/#{account_id}", account_payload)
 
     json_data = json_response(conn_out, 200)
 
     assert json_data == %{
              "email" => "modified_email@gmail.com",
-             "hash_password" => "ThisIsMyPassword123?"
+             "hash_password" => "MyModifiedPassword123?"
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
   end
+
 end

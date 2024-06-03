@@ -3,6 +3,8 @@ defmodule BookMyGigs.Accounts.Storage do
   Module providing functionalties to interact with the accounts table.
   """
 
+  import Ecto.Query
+
   alias BookMyGigs.Accounts
   alias BookMyGigs.Accounts.Storage
   alias BookMyGigs.Repo
@@ -39,5 +41,25 @@ defmodule BookMyGigs.Accounts.Storage do
 
   defp to_context_struct(%Storage.Account{} = index_db) do
     struct(Accounts.Account, Map.from_struct(index_db))
+  end
+
+  def get_email_by_id(id) do
+    query = from(
+      l in Storage.Account,
+      where: l.id == ^id,
+      select: l.email
+    )
+
+    Repo.one(query)
+  end
+
+  def get_hash_password_by_id(id) do
+    query = from(
+      l in Storage.Account,
+      where: l.id == ^id,
+      select: l.hash_password
+    )
+
+    Repo.one(query)
   end
 end

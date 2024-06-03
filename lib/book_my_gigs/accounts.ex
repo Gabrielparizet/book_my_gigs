@@ -28,7 +28,19 @@ defmodule BookMyGigs.Accounts do
     Storage.create_account(account_params)
   end
 
-  def update_account(%{"account" => account_params}, account_id) do
+  def update_account(%{"account" => %{"email" => _email, "hash_password" => _hash_password} = account_params}, account_id) do
     Storage.update_account(account_params, account_id)
   end
+
+  def update_account(%{"account" => %{"email" => email}}, account_id) do
+    params = %{"email" => email, "hash_password" => Storage.get_hash_password_by_id(account_id)}
+
+    Storage.update_account(params, account_id)
+  end
+
+  def update_account(%{"account" => %{"hash_password" => hash_password}}, account_id) do
+    params = %{"hash_password" => hash_password, "email" => Storage.get_email_by_id(account_id)}
+    Storage.update_account(params, account_id)
+  end
+
 end
