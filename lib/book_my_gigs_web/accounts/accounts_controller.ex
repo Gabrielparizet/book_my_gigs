@@ -63,7 +63,7 @@ defmodule BookMyGigsWeb.AccountsController do
       ok: {"Account response", "application/json", Schemas.AccountResponse},
       bad_request: "Invalid input values"
     ],
-    ok: "Accounts successfully updated"
+    ok: "Account successfully updated"
   )
 
   def update(conn, params) do
@@ -77,5 +77,27 @@ defmodule BookMyGigsWeb.AccountsController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, updated_account)
+  end
+
+  operation(:delete,
+    summary: "Delete an account",
+    parameters: [
+      account_id: [
+        in: :path,
+        description: "Account id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: "Account successfully deleted"
+    ],
+    ok: "Account successfully deleted"
+  )
+
+  def delete(conn, _params) do
+    account_id = conn.path_params["id"]
+
+    Accounts.delete_account(account_id)
   end
 end

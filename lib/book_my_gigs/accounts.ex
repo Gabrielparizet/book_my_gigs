@@ -45,4 +45,8 @@ defmodule BookMyGigs.Accounts do
     params = %{"hash_password" => hash_password, "email" => Storage.get_email_by_id(account_id)}
     Storage.update_account(params, account_id)
   end
+
+  def delete_account(id) do
+    Storage.delete_account(id)
+  end
 end

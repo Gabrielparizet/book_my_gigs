@@ -25,6 +25,7 @@ defmodule BookMyGigsWeb.Router do
     get "/accounts", AccountsController, :get
     post "/accounts", AccountsController, :create
     put "/accounts/:id", AccountsController, :update
+    delete "/accounts/:id", AccountsController, :delete
   end
 
   # Other scopes may use custom stacks.

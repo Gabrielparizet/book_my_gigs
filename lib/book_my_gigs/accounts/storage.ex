@@ -43,6 +43,16 @@ defmodule BookMyGigs.Accounts.Storage do
     struct(Accounts.Account, Map.from_struct(index_db))
   end
 
+  def delete_account(id) do
+    query =
+      from(
+        l in Storage.Account,
+        where: l.id == ^id
+      )
+
+    Repo.delete!(query)
+  end
+
   def get_email_by_id(id) do
     query =
       from(
@@ -63,5 +73,6 @@ defmodule BookMyGigs.Accounts.Storage do
       )
 
     Repo.one(query)
+    |> IO.inspect(label: "result of query")
   end
 end
