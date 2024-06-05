@@ -99,5 +99,4 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
   end
-
 end

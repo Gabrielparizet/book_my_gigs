@@ -14,18 +14,17 @@ defmodule BookMyGigs.Accounts.AccountsTest do
       }
       |> Repo.insert!()
 
-
     email_params = %{
       "account" => %{
-        "email" => "modified_email@gmail.com",
+        "email" => "modified_email@gmail.com"
       }
     }
 
     assert Accounts.update_account(email_params, account.id) ==
-      %Accounts.Account{
-        :email => "modified_email@gmail.com",
-        :hash_password => "ThisIsMyPassword123?"
-      }
+             %Accounts.Account{
+               :email => "modified_email@gmail.com",
+               :hash_password => "ThisIsMyPassword123?"
+             }
 
     hash_password_params = %{
       "account" => %{
@@ -34,9 +33,9 @@ defmodule BookMyGigs.Accounts.AccountsTest do
     }
 
     assert Accounts.update_account(hash_password_params, account.id) ==
-      %Accounts.Account{
-        :email => "modified_email@gmail.com",
-        :hash_password => "ModifiedPassword123?"
-      }
+             %Accounts.Account{
+               :email => "modified_email@gmail.com",
+               :hash_password => "ModifiedPassword123?"
+             }
   end
 end

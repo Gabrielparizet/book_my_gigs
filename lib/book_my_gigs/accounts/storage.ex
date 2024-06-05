@@ -44,21 +44,23 @@ defmodule BookMyGigs.Accounts.Storage do
   end
 
   def get_email_by_id(id) do
-    query = from(
-      l in Storage.Account,
-      where: l.id == ^id,
-      select: l.email
-    )
+    query =
+      from(
+        l in Storage.Account,
+        where: l.id == ^id,
+        select: l.email
+      )
 
     Repo.one(query)
   end
 
   def get_hash_password_by_id(id) do
-    query = from(
-      l in Storage.Account,
-      where: l.id == ^id,
-      select: l.hash_password
-    )
+    query =
+      from(
+        l in Storage.Account,
+        where: l.id == ^id,
+        select: l.hash_password
+      )
 
     Repo.one(query)
   end

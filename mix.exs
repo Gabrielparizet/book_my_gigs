@@ -12,11 +12,8 @@ defmodule BookMyGigs.MixProject do
       deps: deps(),
       test_coverage: [tool: ExCoveralls, export: "cov"],
       preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test,
-        "coveralls.cobertura": :test
+        quality: :test,
+        "coveralls.html": :test
       ]
     ]
   end
@@ -91,6 +88,13 @@ defmodule BookMyGigs.MixProject do
         "tailwind book_my_gigs --minify",
         "esbuild book_my_gigs --minify",
         "phx.digest"
+      ],
+      quality: [
+        "format",
+        "credo",
+        "ecto.create --quiet",
+        "ecto.migrate -r BookMyGigs.Repo --quiet",
+        "coveralls.html"
       ]
     ]
   end

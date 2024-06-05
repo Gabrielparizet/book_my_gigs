@@ -68,6 +68,7 @@ defmodule BookMyGigsWeb.AccountsController do
 
   def update(conn, params) do
     account_id = conn.path_params["id"]
+
     updated_account =
       params
       |> Accounts.update_account(account_id)
