@@ -99,4 +99,32 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
   end
+
+  test "Delete an account", %{conn: conn} do
+    %Storage.Account{
+      email: "test@email.com",
+      hash_password: "ThisIsAPassword123?"
+    }
+    |> Repo.insert!()
+
+    query =
+      from(
+        a in Storage.Account,
+        where: a.email == "test@email.com",
+        select: a.id
+      )
+
+    account_id = Repo.one(query)
+
+    conn_out =
+      conn
+      |> put_req_header("content-type", "application/json")
+      |> delete("/api/accounts/#{account_id}")
+
+    assert conn_out.status == 200
+    conn_out.resp_body == "Account succesfully deleted"
+
+    deleted_account = Repo.get(Storage.Account, account_id)
+    assert deleted_account == nil
+  end
 end

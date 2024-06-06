@@ -44,21 +44,23 @@ defmodule BookMyGigs.Accounts.Storage do
   end
 
   def delete_account(id) do
-    query =
-      from(
-        l in Storage.Account,
-        where: l.id == ^id
-      )
+    account = Repo.get!(Storage.Account, id)
 
-    Repo.delete!(query)
+    case Repo.delete(account) do
+      {:ok, _struct} ->
+        "Account successfully deleted"
+
+      {:error, _changeset} ->
+        "Something went wrong"
+    end
   end
 
   def get_email_by_id(id) do
     query =
       from(
-        l in Storage.Account,
-        where: l.id == ^id,
-        select: l.email
+        a in Storage.Account,
+        where: a.id == ^id,
+        select: a.email
       )
 
     Repo.one(query)
@@ -67,12 +69,11 @@ defmodule BookMyGigs.Accounts.Storage do
   def get_hash_password_by_id(id) do
     query =
       from(
-        l in Storage.Account,
-        where: l.id == ^id,
-        select: l.hash_password
+        a in Storage.Account,
+        where: a.id == ^id,
+        select: a.hash_password
       )
 
     Repo.one(query)
-    |> IO.inspect(label: "result of query")
   end
 end

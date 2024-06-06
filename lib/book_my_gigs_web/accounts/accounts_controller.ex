@@ -98,6 +98,10 @@ defmodule BookMyGigsWeb.AccountsController do
   def delete(conn, _params) do
     account_id = conn.path_params["id"]
 
-    Accounts.delete_account(account_id)
+    response = Accounts.delete_account(account_id)
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, response)
   end
 end
