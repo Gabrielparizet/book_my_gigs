@@ -25,8 +25,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     assert json_data == [
              %{
-               "email" => "test@gmail.com",
-               "password" => "ThisIsMyPassword123"
+               "email" => "test@gmail.com"
              }
            ]
 
@@ -53,8 +52,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     json_data = json_response(conn_out, 201)
 
     assert json_data == %{
-             "email" => "test@email.com",
-             "password" => "ThisIsMyPassword123?"
+             "email" => "test@email.com"
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
@@ -93,8 +91,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     json_data = json_response(conn_out, 200)
 
     assert json_data == %{
-             "email" => "modified_email@gmail.com",
-             "password" => "MyModifiedPassword123?"
+             "email" => "modified_email@gmail.com"
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)

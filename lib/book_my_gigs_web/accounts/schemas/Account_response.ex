@@ -17,16 +17,12 @@ defmodule BookMyGigsWeb.Accounts.Schemas.AccountResponse do
         properties: %{
           email: %Schema{
             type: :string
-          },
-          password: %Schema{
-            type: :string
           }
         }
       }
     },
     example: %{
-      "email" => "test@gmail.com",
-      "password" => "ThisIsMyPassword123?"
+      "email" => "test@gmail.com"
     }
   })
 end

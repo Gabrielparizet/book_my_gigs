@@ -21,9 +21,8 @@ defmodule BookMyGigs.Accounts.AccountsTest do
     }
 
     assert Accounts.update_account(email_params, account.id) ==
-             %Accounts.Account{
-               :email => "modified_email@gmail.com",
-               :password => "ThisIsMyPassword123?"
+             %{
+               :email => "modified_email@gmail.com"
              }
 
     password_params = %{
@@ -33,9 +32,22 @@ defmodule BookMyGigs.Accounts.AccountsTest do
     }
 
     assert Accounts.update_account(password_params, account.id) ==
-             %Accounts.Account{
-               :email => "modified_email@gmail.com",
-               :password => "ModifiedPassword123?"
+             %{
+               :email => "modified_email@gmail.com"
              }
+
+    modified_account = Repo.get_by(Storage.Account, email: "modified_email@gmail.com")
+
+    hash = modified_account.password
+
+    assert Bcrypt.verify_pass("ModifiedPassword123?", hash) == true
+  end
+
+  test "hash_password/1" do
+    password = "ThisIsAPassword123?"
+
+    hash_password = Accounts.hash_password(password)
+
+    assert Bcrypt.verify_pass(password, hash_password) == true
   end
 end

@@ -21,32 +21,69 @@ defmodule BookMyGigs.Accounts do
   end
 
   def get_accounts() do
-    Storage.get_accounts()
+    accounts = Storage.get_accounts()
+    Enum.map(accounts, &delete_password_from_response/1)
   end
 
   def create_account(%{"account" => account_params}) do
-    Storage.create_account(account_params)
+    hash_password = hash_password(account_params["password"])
+
+    account_params
+    |> Map.put("password", hash_password)
+    |> Storage.create_account()
+    |> delete_password_from_response()
   end
 
-  def update_account(
-        %{"account" => %{"email" => _email, "password" => _password} = account_params},
-        account_id
-      ) do
-    Storage.update_account(account_params, account_id)
+  def update_account(%{"account" => %{"email" => email, "password" => password}}, account_id) do
+    account_params = %{
+      "email" => email,
+      "password" => hash_password(password)
+    }
+
+    account_params
+    |> Storage.update_account(account_id)
+    |> delete_password_from_response()
   end
 
   def update_account(%{"account" => %{"email" => email}}, account_id) do
-    params = %{"email" => email, "password" => Storage.get_password_by_id(account_id)}
+    account_params = %{"email" => email, "password" => Storage.get_password_by_id(account_id)}
 
-    Storage.update_account(params, account_id)
+    account_params
+    |> Storage.update_account(account_id)
+    |> delete_password_from_response()
   end
 
   def update_account(%{"account" => %{"password" => password}}, account_id) do
-    params = %{"password" => password, "email" => Storage.get_email_by_id(account_id)}
-    Storage.update_account(params, account_id)
+    account_params = %{
+      "password" => hash_password(password),
+      "email" => Storage.get_email_by_id(account_id)
+    }
+
+    account_params
+    |> Storage.update_account(account_id)
+    |> delete_password_from_response()
   end
 
   def delete_account(id) do
     Storage.delete_account(id)
+  end
+
+  def hash_password(password) do
+    Bcrypt.hash_pwd_salt(password)
+  end
+
+  defp delete_password_from_response(account_response) do
+    account_map = Map.from_struct(account_response)
+    account_map_without_password = Map.delete(account_map, :password)
+    struct = struct!(account_response.__struct__, account_map_without_password)
+
+    build_response(struct)
+  end
+
+  defp build_response(struct) do
+    struct
+    |> Map.from_struct()
+    |> Enum.filter(fn {_key, val} -> val != nil end)
+    |> Enum.into(%{})
   end
 end
