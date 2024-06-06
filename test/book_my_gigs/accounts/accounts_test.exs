@@ -10,7 +10,7 @@ defmodule BookMyGigs.Accounts.AccountsTest do
     account =
       %Storage.Account{
         email: "test@gmail.com",
-        hash_password: "ThisIsMyPassword123?"
+        password: "ThisIsMyPassword123?"
       }
       |> Repo.insert!()
 
@@ -23,19 +23,19 @@ defmodule BookMyGigs.Accounts.AccountsTest do
     assert Accounts.update_account(email_params, account.id) ==
              %Accounts.Account{
                :email => "modified_email@gmail.com",
-               :hash_password => "ThisIsMyPassword123?"
+               :password => "ThisIsMyPassword123?"
              }
 
-    hash_password_params = %{
+    password_params = %{
       "account" => %{
-        "hash_password" => "ModifiedPassword123?"
+        "password" => "ModifiedPassword123?"
       }
     }
 
-    assert Accounts.update_account(hash_password_params, account.id) ==
+    assert Accounts.update_account(password_params, account.id) ==
              %Accounts.Account{
                :email => "modified_email@gmail.com",
-               :hash_password => "ModifiedPassword123?"
+               :password => "ModifiedPassword123?"
              }
   end
 end

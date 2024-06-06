@@ -12,11 +12,11 @@ defmodule BookMyGigs.Accounts do
 
     @derive Jason.Encoder
 
-    defstruct [:email, :hash_password]
+    defstruct [:email, :password]
 
     @type t :: %__MODULE__{
             email: String.t(),
-            hash_password: String.t()
+            password: String.t()
           }
   end
 
@@ -29,20 +29,20 @@ defmodule BookMyGigs.Accounts do
   end
 
   def update_account(
-        %{"account" => %{"email" => _email, "hash_password" => _hash_password} = account_params},
+        %{"account" => %{"email" => _email, "password" => _password} = account_params},
         account_id
       ) do
     Storage.update_account(account_params, account_id)
   end
 
   def update_account(%{"account" => %{"email" => email}}, account_id) do
-    params = %{"email" => email, "hash_password" => Storage.get_hash_password_by_id(account_id)}
+    params = %{"email" => email, "password" => Storage.get_password_by_id(account_id)}
 
     Storage.update_account(params, account_id)
   end
 
-  def update_account(%{"account" => %{"hash_password" => hash_password}}, account_id) do
-    params = %{"hash_password" => hash_password, "email" => Storage.get_email_by_id(account_id)}
+  def update_account(%{"account" => %{"password" => password}}, account_id) do
+    params = %{"password" => password, "email" => Storage.get_email_by_id(account_id)}
     Storage.update_account(params, account_id)
   end
 

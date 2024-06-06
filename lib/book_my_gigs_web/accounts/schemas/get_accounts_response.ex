@@ -17,7 +17,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.GetAccountsResponse do
         email: %Schema{
           type: :string
         },
-        hash_password: %Schema{
+        password: %Schema{
           type: :string
         }
       }
@@ -25,11 +25,11 @@ defmodule BookMyGigsWeb.Accounts.Schemas.GetAccountsResponse do
     example: [
       %{
         "email" => "test@email.com",
-        "hash_password" => "ThisIsMyPassword123?"
+        "password" => "ThisIsMyPassword123?"
       },
       %{
         "email" => "test@email.com",
-        "hash_password" => "ThisIsMyPassword123?"
+        "password" => "ThisIsMyPassword123?"
       }
     ]
   })

@@ -5,7 +5,7 @@ defmodule BookMyGigs.Repo.Migrations.CreateAccountsTable do
     create table(:accounts, primary_key: false, prefix: "public") do
       add(:id, :uuid, primary_key: true)
       add(:email, :string)
-      add(:hash_password, :string)
+      add(:password, :string)
 
       timestamps(type: :utc_datetime)
     end

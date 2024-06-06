@@ -16,7 +16,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.UpdateAccountInput do
             type: :string,
             format: :email
           },
-          hash_password: %Schema{
+          password: %Schema{
             type: :string
           }
         },
@@ -27,7 +27,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.UpdateAccountInput do
     example: %{
       "account" => %{
         "email" => "test@gmail.com",
-        "hash_password" => "ThisIsMyPassword123?"
+        "password" => "ThisIsMyPassword123?"
       }
     }
   })

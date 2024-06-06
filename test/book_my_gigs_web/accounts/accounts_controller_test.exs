@@ -14,7 +14,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     %Storage.Account{
       email: "test@gmail.com",
-      hash_password: "ThisIsMyPassword123"
+      password: "ThisIsMyPassword123"
     }
     |> Repo.insert!()
 
@@ -26,7 +26,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     assert json_data == [
              %{
                "email" => "test@gmail.com",
-               "hash_password" => "ThisIsMyPassword123"
+               "password" => "ThisIsMyPassword123"
              }
            ]
 
@@ -39,7 +39,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     account_payload = %{
       "account" => %{
         "email" => "test@email.com",
-        "hash_password" => "ThisIsMyPassword123?"
+        "password" => "ThisIsMyPassword123?"
       }
     }
 
@@ -54,7 +54,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     assert json_data == %{
              "email" => "test@email.com",
-             "hash_password" => "ThisIsMyPassword123?"
+             "password" => "ThisIsMyPassword123?"
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
@@ -65,7 +65,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     %Storage.Account{
       email: "test@gmail.com",
-      hash_password: "ThisIsMyPassword123?"
+      password: "ThisIsMyPassword123?"
     }
     |> Repo.insert!()
 
@@ -81,7 +81,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     account_payload = %{
       "account" => %{
         "email" => "modified_email@gmail.com",
-        "hash_password" => "MyModifiedPassword123?"
+        "password" => "MyModifiedPassword123?"
       }
     }
 
@@ -94,7 +94,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     assert json_data == %{
              "email" => "modified_email@gmail.com",
-             "hash_password" => "MyModifiedPassword123?"
+             "password" => "MyModifiedPassword123?"
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)
@@ -103,7 +103,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   test "Delete an account", %{conn: conn} do
     %Storage.Account{
       email: "test@email.com",
-      hash_password: "ThisIsAPassword123?"
+      password: "ThisIsAPassword123?"
     }
     |> Repo.insert!()
 
@@ -122,7 +122,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       |> delete("/api/accounts/#{account_id}")
 
     assert conn_out.status == 200
-    conn_out.resp_body == "Account succesfully deleted"
+    assert conn_out.resp_body == "Account successfully deleted"
 
     deleted_account = Repo.get(Storage.Account, account_id)
     assert deleted_account == nil

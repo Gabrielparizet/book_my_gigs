@@ -18,7 +18,7 @@ defmodule BookMyGigs.Accounts.Storage do
   def create_account(params) do
     params = %{
       email: params["email"],
-      hash_password: params["hash_password"]
+      password: params["password"]
     }
 
     %Storage.Account{}
@@ -30,7 +30,7 @@ defmodule BookMyGigs.Accounts.Storage do
   def update_account(params, account_id) do
     params =
       params
-      |> Map.take(["email", "hash_password"])
+      |> Map.take(["email", "password"])
       |> Enum.into(%{}, fn {key, value} -> {String.to_atom(key), value} end)
 
     %Storage.Account{id: account_id}
@@ -66,12 +66,12 @@ defmodule BookMyGigs.Accounts.Storage do
     Repo.one(query)
   end
 
-  def get_hash_password_by_id(id) do
+  def get_password_by_id(id) do
     query =
       from(
         a in Storage.Account,
         where: a.id == ^id,
-        select: a.hash_password
+        select: a.password
       )
 
     Repo.one(query)

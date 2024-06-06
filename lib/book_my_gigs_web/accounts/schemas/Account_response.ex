@@ -26,7 +26,7 @@ defmodule BookMyGigsWeb.Accounts.Schemas.AccountResponse do
     },
     example: %{
       "email" => "test@gmail.com",
-      "hash_password" => "ThisIsMyPassword123?"
+      "password" => "ThisIsMyPassword123?"
     }
   })
 end
