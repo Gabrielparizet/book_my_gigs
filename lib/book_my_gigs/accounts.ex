@@ -12,11 +12,12 @@ defmodule BookMyGigs.Accounts do
 
     @derive Jason.Encoder
 
-    defstruct [:email, :password]
+    defstruct [:email, :password, :id]
 
     @type t :: %__MODULE__{
             email: String.t(),
-            password: String.t()
+            password: String.t(),
+            id: String.t()
           }
   end
 
@@ -25,13 +26,20 @@ defmodule BookMyGigs.Accounts do
     Enum.map(accounts, &delete_password_from_response/1)
   end
 
+  def get_account_by_id!(id) do
+    Storage.get_account_by_id!(id)
+  end
+
   def create_account(%{"account" => account_params}) do
     hash_password = hash_password(account_params["password"])
 
-    account_params
-    |> Map.put("password", hash_password)
-    |> Storage.create_account()
-    |> delete_password_from_response()
+    account_params =
+      Map.put(account_params, "password", hash_password)
+
+    case Storage.create_account(account_params) do
+      {:ok, account} -> {:ok, delete_password_from_response(account)}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   def update_account(%{"account" => %{"email" => email, "password" => password}}, account_id) do

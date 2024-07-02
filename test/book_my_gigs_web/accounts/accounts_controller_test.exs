@@ -9,14 +9,23 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   alias BookMyGigs.Accounts.Storage
   alias OpenApiSpex.TestAssertions
 
+  setup do
+    case Ecto.Adapters.SQL.Sandbox.checkout(Repo) do
+      :ok -> :ok
+      {:already, :allowed} -> :ok
+      {:error, reason} -> raise "Failed to checkout sandbox: #{inspect(reason)}"
+    end
+  end
+
   test "Get all accounts", %{conn: conn} do
     api_spec = ApiSpec.spec()
 
-    %Storage.Account{
-      email: "test@gmail.com",
-      password: "ThisIsMyPassword123"
-    }
-    |> Repo.insert!()
+    account =
+      %Storage.Account{
+        email: "test@gmail.com",
+        password: "ThisIsMyPassword123"
+      }
+      |> Repo.insert!()
 
     conn_out = get(conn, "/api/accounts")
 
@@ -25,7 +34,8 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     assert json_data == [
              %{
-               "email" => "test@gmail.com"
+               "email" => "test@gmail.com",
+               "id" => account.id
              }
            ]
 
@@ -47,6 +57,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     conn_out =
       conn
       |> put_req_header("content-type", "application/json")
+      |> IO.inspect(label: "result")
       |> post("/api/accounts", account_payload)
 
     json_data = json_response(conn_out, 201)
@@ -91,7 +102,8 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     json_data = json_response(conn_out, 200)
 
     assert json_data == %{
-             "email" => "modified_email@gmail.com"
+             "email" => "modified_email@gmail.com",
+             "id" => account_id
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)

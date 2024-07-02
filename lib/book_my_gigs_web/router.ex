@@ -14,6 +14,15 @@ defmodule BookMyGigsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug Guardian.Plug.Pipeline,
+      module: BookMyGigs.Guardian,
+      error_handler: BookMyGigs.AuthErrorHandler
+
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource, allow_blank: true
+  end
+
   scope "/", BookMyGigsWeb do
     pipe_through :browser
 

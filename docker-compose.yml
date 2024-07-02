@@ -1,13 +1,51 @@
-volumes:
-  data:
-
-services:
-  postgres:
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+services: 
+  phoenix:
+    build:
+      context: .
+    environment: 
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: book_my_gigs_dev
+      PGPORT: 5432
+      PGHOST: db
     ports:
-      - 5432:5432
+      - '4000:4000'
+    depends_on:
+      - db
+    networks:
+      - backend
     volumes:
-      - data:/var/lib/postgresql
+      - phoenix_deps:/book_my_gigs/deps
+      - phoenix_build:/book_my_gigs/_build
+      - ./:/book_my_gigs
+    expose:
+      - 4000
+    
+  db: 
+    image: postgres:latest
+    hostname: db # facultatif car par défaut il prend le nom du service
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: book_my_gigs_dev
+    restart: always
+    # name:/docker_path (but this time docker containes the data file)
+    # ./local_path:/docker_path
+    volumes:
+      - ./data:/var/lib/postrgresql/data
+    networks:
+      - backend
+    ports:
+      - '5432:5432'
+
+# Allows containers to communicate over the same network
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  phoenix_deps:
+  phoenix_build:
+
+
+

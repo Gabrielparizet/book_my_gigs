@@ -38,6 +38,25 @@ defmodule BookMyGigsWeb.AccountsController do
   )
 
   def create(conn, params) do
+    case Accounts.create_account(params) do
+      {:ok, account} ->
+        {:ok, token, _claims} = BookMyGigs.Guardian.encode_and_sign(account)
+
+        response = %{
+          account: account,
+          token: token
+        }
+
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(201, Jason.encode!(response))
+
+      {:error, reason} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(%{error: reason}))
+    end
+
     account =
       params
       |> Accounts.create_account()
