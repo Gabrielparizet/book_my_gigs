@@ -12,12 +12,16 @@ defmodule BookMyGigs.Accounts.Storage do
   def get_accounts do
     Storage.Account
     |> Repo.all()
-    |> Enum.map(&to_context_struct/1)
+    |> Enum.map(&Accounts.to_context_struct/1)
   end
 
   def get_account_by_id!(id) do
     Storage.Account
     |> Repo.get!(id)
+  end
+
+  def get_account_by_email(email) do
+    Repo.get_by(Storage.Account, email: email)
   end
 
   def create_account(params) do
@@ -31,7 +35,7 @@ defmodule BookMyGigs.Accounts.Storage do
 
     case Repo.insert(changeset) do
       {:ok, account} ->
-        {:ok, to_context_struct(account)}
+        {:ok, Accounts.to_context_struct(account)}
 
       {:error, changeset} ->
         {:error, changeset}
@@ -47,11 +51,7 @@ defmodule BookMyGigs.Accounts.Storage do
     %Storage.Account{id: account_id}
     |> Storage.Account.changeset(params)
     |> Repo.update!()
-    |> to_context_struct()
-  end
-
-  defp to_context_struct(%Storage.Account{} = index_db) do
-    struct(Accounts.Account, Map.from_struct(index_db))
+    |> Accounts.to_context_struct()
   end
 
   def delete_account(id) do

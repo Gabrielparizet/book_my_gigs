@@ -30,6 +30,10 @@ defmodule BookMyGigs.Accounts do
     Storage.get_account_by_id!(id)
   end
 
+  def get_account_by_email(email) do
+    Storage.get_account_by_email(email)
+  end
+
   def create_account(%{"account" => account_params}) do
     hash_password = hash_password(account_params["password"])
 
@@ -93,5 +97,9 @@ defmodule BookMyGigs.Accounts do
     |> Map.from_struct()
     |> Enum.filter(fn {_key, val} -> val != nil end)
     |> Enum.into(%{})
+  end
+
+  def to_context_struct(%Storage.Account{} = index_db) do
+    struct(Account, Map.from_struct(index_db))
   end
 end

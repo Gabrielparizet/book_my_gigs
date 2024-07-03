@@ -16,11 +16,14 @@ defmodule BookMyGigsWeb.Router do
 
   pipeline :auth do
     plug Guardian.Plug.Pipeline,
+      otp_app: :book_my_gigs,
       module: BookMyGigs.Guardian,
       error_handler: BookMyGigs.AuthErrorHandler
 
-    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.EnsureAuthenticated
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", BookMyGigsWeb do
@@ -35,6 +38,8 @@ defmodule BookMyGigsWeb.Router do
     post "/accounts", AccountsController, :create
     put "/accounts/:id", AccountsController, :update
     delete "/accounts/:id", AccountsController, :delete
+
+    post "/accounts/sign_in", AccountsController, :sign_in
   end
 
   # Other scopes may use custom stacks.

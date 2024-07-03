@@ -114,4 +114,32 @@ defmodule BookMyGigsWeb.AccountsController do
     |> put_resp_content_type("application/json")
     |> send_resp(200, response)
   end
+
+  operation(:sign_in,
+    summary: "Sign in",
+    request_body: {"Create account input", "application/json", Schemas.CreateAccountInput},
+    responses: [
+      ok: {"Account response", "application/json", Schemas.AccountResponse},
+      bad_request: "Invalid input values"
+    ]
+  )
+
+  def sign_in(conn, %{"account" => %{"email" => email, "hash_password" => hash_password}}) do
+    case BookMyGigs.Guardian.authenticate(email, hash_password) do
+      {:ok, account, token} ->
+        response =
+          Jason.encode!(%{account: Accounts.to_context_struct(account), token: token})
+
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, response)
+
+      {:error, _reason} ->
+        response = Jason.encode!(%{error: "invalid credentials"})
+
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(401, response)
+    end
+  end
 end

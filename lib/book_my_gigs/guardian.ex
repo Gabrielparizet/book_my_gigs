@@ -17,4 +17,29 @@ defmodule BookMyGigs.Guardian do
     resource = Accounts.get_account_by_id!(id)
     {:ok, resource}
   end
+
+  def authenticate(email, password) do
+    case BookMyGigs.Accounts.get_account_by_email(email) do
+      nil ->
+        {:error, :unauthorized}
+
+      resource ->
+        hash_password = resource.password
+
+        case validate_password(password, hash_password) do
+          true -> create_token(resource)
+          false -> {:error, :reason_for_error}
+        end
+    end
+  end
+
+  def validate_password(password, hash_password) do
+    Bcrypt.verify_pass(password, hash_password)
+  end
+
+  defp create_token(account) do
+    {:ok, token, _full_claims} = encode_and_sign(account)
+
+    {:ok, account, token}
+  end
 end
