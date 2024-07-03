@@ -67,7 +67,8 @@ defmodule BookMyGigs.MixProject do
       {:open_api_spex, "~> 3.11"},
       {:excoveralls, "~> 0.18", only: :test},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:bcrypt_elixir, "~> 3.1.0"}
+      {:bcrypt_elixir, "~> 3.1.0"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 
