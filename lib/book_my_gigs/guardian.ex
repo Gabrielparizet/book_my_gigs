@@ -1,4 +1,7 @@
 defmodule BookMyGigs.Guardian do
+  @moduledoc """
+  Guardian implementation module
+  """
   use Guardian, otp_app: :book_my_gigs
 
   alias BookMyGigs.Accounts

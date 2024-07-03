@@ -9,14 +9,6 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   alias BookMyGigs.Accounts.Storage
   alias OpenApiSpex.TestAssertions
 
-  setup do
-    case Ecto.Adapters.SQL.Sandbox.checkout(Repo) do
-      :ok -> :ok
-      {:already, :allowed} -> :ok
-      {:error, reason} -> raise "Failed to checkout sandbox: #{inspect(reason)}"
-    end
-  end
-
   test "Get all accounts", %{conn: conn} do
     api_spec = ApiSpec.spec()
 
@@ -59,10 +51,15 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       |> put_req_header("content-type", "application/json")
       |> post("/api/accounts", account_payload)
 
-    json_data = json_response(conn_out, 201)
+    json_data =
+      json_response(conn_out, 201)
 
     assert json_data == %{
-             "email" => "test@email.com"
+             "account" => %{
+               "email" => "test@email.com",
+               "id" => json_data["account"]["id"]
+             },
+             "token" => json_data["token"]
            }
 
     TestAssertions.assert_schema(json_data, "Account response", api_spec)

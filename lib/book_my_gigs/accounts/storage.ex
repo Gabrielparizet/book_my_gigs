@@ -26,11 +26,15 @@ defmodule BookMyGigs.Accounts.Storage do
       password: params["password"]
     }
 
-    changeset = Storage.Account.changeset(%Storage.Account{}, params)
+    changeset =
+      Storage.Account.changeset(%Storage.Account{}, params)
 
     case Repo.insert(changeset) do
-      {:ok, account} -> {:ok, to_context_struct(account)}
-      {:error, changeset} -> {:error, changeset}
+      {:ok, account} ->
+        {:ok, to_context_struct(account)}
+
+      {:error, changeset} ->
+        {:error, changeset}
     end
   end
 

@@ -1,4 +1,7 @@
 defmodule BookMyGigs.AuthErrorHandler do
+  @moduledoc """
+  Module for handling protected routes errors
+  """
   import Plug.Conn
 
   def auth_error(conn, {type, _reason}, _opts) do

@@ -56,15 +56,6 @@ defmodule BookMyGigsWeb.AccountsController do
         |> put_resp_content_type("application/json")
         |> send_resp(400, Jason.encode!(%{error: reason}))
     end
-
-    account =
-      params
-      |> Accounts.create_account()
-      |> Jason.encode!()
-
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(201, account)
   end
 
   operation(:update,
