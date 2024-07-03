@@ -27,19 +27,17 @@ defmodule BookMyGigsWeb.Router do
   end
 
   scope "/", BookMyGigsWeb do
-    pipe_through :browser
+    pipe_through [:api]
+    post "/accounts", AccountsController, :create
 
-    get "/", PageController, :home
+    post "/accounts/sign_in", AccountsController, :sign_in
   end
 
   scope "/api", BookMyGigsWeb do
-    pipe_through :api
+    pipe_through [:api, :auth]
     get "/accounts", AccountsController, :get
-    post "/accounts", AccountsController, :create
     put "/accounts/:id", AccountsController, :update
     delete "/accounts/:id", AccountsController, :delete
-
-    post "/accounts/sign_in", AccountsController, :sign_in
   end
 
   # Other scopes may use custom stacks.
