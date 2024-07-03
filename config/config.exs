@@ -61,6 +61,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :book_my_gigs, BookMyGigs.Guardian,
+  issuer: "book_my_gigs",
+  secret_key: "BkVFvBGNBB2sHC/SN9FedZsnOtlX0rUqLbvfpJ2vTWWrz2BIQewHn18TUgsj6kyo"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

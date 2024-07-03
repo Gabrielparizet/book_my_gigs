@@ -15,16 +15,23 @@ defmodule BookMyGigs.Accounts.Storage do
     |> Enum.map(&to_context_struct/1)
   end
 
+  def get_account_by_id!(id) do
+    Storage.Account
+    |> Repo.get!(id)
+  end
+
   def create_account(params) do
     params = %{
       email: params["email"],
       password: params["password"]
     }
 
-    %Storage.Account{}
-    |> Storage.Account.changeset(params)
-    |> Repo.insert!()
-    |> to_context_struct()
+    changeset = Storage.Account.changeset(%Storage.Account{}, params)
+
+    case Repo.insert(changeset) do
+      {:ok, account} -> {:ok, to_context_struct(account)}
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 
   def update_account(params, account_id) do

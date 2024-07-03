@@ -22,7 +22,8 @@ defmodule BookMyGigs.Accounts.AccountsTest do
 
     assert Accounts.update_account(email_params, account.id) ==
              %{
-               :email => "modified_email@gmail.com"
+               :email => "modified_email@gmail.com",
+               :id => account.id
              }
 
     password_params = %{
@@ -33,7 +34,8 @@ defmodule BookMyGigs.Accounts.AccountsTest do
 
     assert Accounts.update_account(password_params, account.id) ==
              %{
-               :email => "modified_email@gmail.com"
+               :email => "modified_email@gmail.com",
+               :id => account.id
              }
 
     modified_account = Repo.get_by(Storage.Account, email: "modified_email@gmail.com")
