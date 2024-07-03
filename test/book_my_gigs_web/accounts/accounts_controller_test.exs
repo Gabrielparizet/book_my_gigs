@@ -9,6 +9,12 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   alias BookMyGigs.Accounts.Storage
   alias OpenApiSpex.TestAssertions
 
+  def authenticate_user(conn, account) do
+    {:ok, token, _claims} = BookMyGigs.Guardian.encode_and_sign(account)
+
+    put_req_header(conn, "authorization", "Bearer #{token}")
+  end
+
   test "Get all accounts", %{conn: conn} do
     api_spec = ApiSpec.spec()
 
@@ -19,7 +25,10 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       }
       |> Repo.insert!()
 
-    conn_out = get(conn, "/api/accounts")
+    conn_out =
+      conn
+      |> authenticate_user(account)
+      |> get("/api/accounts")
 
     json_data =
       json_response(conn_out, 200)
@@ -39,7 +48,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     account_payload = %{
       "account" => %{
-        "email" => "test@email.com",
+        "email" => "test@gmail.com",
         "password" => "ThisIsMyPassword123?"
       }
     }
@@ -49,14 +58,14 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     conn_out =
       conn
       |> put_req_header("content-type", "application/json")
-      |> post("/api/accounts", account_payload)
+      |> post("/accounts", account_payload)
 
     json_data =
       json_response(conn_out, 201)
 
     assert json_data == %{
              "account" => %{
-               "email" => "test@email.com",
+               "email" => "test@gmail.com",
                "id" => json_data["account"]["id"]
              },
              "token" => json_data["token"]
@@ -68,11 +77,12 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   test "Update an account", %{conn: conn} do
     api_spec = ApiSpec.spec()
 
-    %Storage.Account{
-      email: "test@gmail.com",
-      password: "ThisIsMyPassword123?"
-    }
-    |> Repo.insert!()
+    account =
+      %Storage.Account{
+        email: "test@gmail.com",
+        password: "ThisIsMyPassword123?"
+      }
+      |> Repo.insert!()
 
     query =
       from(
@@ -92,6 +102,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     conn_out =
       conn
+      |> authenticate_user(account)
       |> put_req_header("content-type", "application/json")
       |> put("/api/accounts/#{account_id}", account_payload)
 
@@ -106,16 +117,17 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
   end
 
   test "Delete an account", %{conn: conn} do
-    %Storage.Account{
-      email: "test@email.com",
-      password: "ThisIsAPassword123?"
-    }
-    |> Repo.insert!()
+    account =
+      %Storage.Account{
+        email: "test@gmail.com",
+        password: "ThisIsAPassword123?"
+      }
+      |> Repo.insert!()
 
     query =
       from(
         a in Storage.Account,
-        where: a.email == "test@email.com",
+        where: a.email == "test@gmail.com",
         select: a.id
       )
 
@@ -123,6 +135,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
     conn_out =
       conn
+      |> authenticate_user(account)
       |> put_req_header("content-type", "application/json")
       |> delete("/api/accounts/#{account_id}")
 
