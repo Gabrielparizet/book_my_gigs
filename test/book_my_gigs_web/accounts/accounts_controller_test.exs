@@ -57,7 +57,6 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
     conn_out =
       conn
       |> put_req_header("content-type", "application/json")
-      |> IO.inspect(label: "result")
       |> post("/api/accounts", account_payload)
 
     json_data = json_response(conn_out, 201)
