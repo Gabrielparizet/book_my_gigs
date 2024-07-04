@@ -42,6 +42,7 @@ defmodule BookMyGigsWeb.Router do
   scope "/api", BookMyGigsWeb do
     pipe_through [:api, :auth]
     get "/accounts", AccountsController, :get
+    get "/account/:id", AccountsController, :get_account_by_id
     put "/accounts/:id", AccountsController, :update
     delete "/accounts/:id", AccountsController, :delete
   end

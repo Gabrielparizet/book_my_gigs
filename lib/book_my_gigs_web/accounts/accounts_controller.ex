@@ -27,6 +27,36 @@ defmodule BookMyGigsWeb.AccountsController do
     |> send_resp(200, accounts)
   end
 
+  operation(:get_account_by_id,
+    summary: "Get account by id",
+    parameters: [
+      account_id: [
+        in: :path,
+        description: "Account id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"Get accounts response", "application/json", Schemas.GetAccountsResponse}
+    ],
+    ok: "Account succesfsfully found"
+  )
+
+  def get_account_by_id(conn, _params) do
+    account_id = conn.path_params["id"]
+
+    account =
+      account_id
+      |> Accounts.get_account_by_id!()
+      |> Accounts.to_context_struct()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, account)
+  end
+
   operation(:create,
     summary: "Create an account",
     request_body: {"Create account input", "application/json", Schemas.CreateAccountInput},
