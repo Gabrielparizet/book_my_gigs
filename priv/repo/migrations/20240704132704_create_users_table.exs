@@ -10,7 +10,7 @@ defmodule BookMyGigs.Repo.Migrations.CreateUsersTable do
         references(:accounts,
           type: :uuid,
           column: :id,
-          on_delete: delete_all,
+          on_delete: :delete_all,
           prefix: "public"
         )
       )
