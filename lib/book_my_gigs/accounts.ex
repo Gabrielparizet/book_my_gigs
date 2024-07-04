@@ -12,12 +12,13 @@ defmodule BookMyGigs.Accounts do
 
     @derive Jason.Encoder
 
-    defstruct [:email, :password, :id]
+    defstruct [:id, :email, :password]
 
+    @type id :: String.t()
     @type t :: %__MODULE__{
+            id: String.t(),
             email: String.t(),
-            password: String.t(),
-            id: String.t()
+            password: String.t()
           }
   end
 

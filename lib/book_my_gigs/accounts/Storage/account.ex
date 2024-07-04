@@ -5,11 +5,18 @@ defmodule BookMyGigs.Accounts.Storage.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BookMyGigs.Users.Storage
+
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "accounts" do
     field(:email, :string)
     field(:password, :string)
+
+    has_one(:user, Storage.User,
+      foreign_key: :account_id,
+      on_replace: :delete
+    )
 
     timestamps(type: :utc_datetime)
   end
