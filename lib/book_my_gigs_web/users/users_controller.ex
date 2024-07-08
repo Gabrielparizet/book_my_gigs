@@ -8,7 +8,7 @@ defmodule BookMyGigsWeb.Users.UsersController do
 
   alias OpenApiSpex.Schema
   alias BookMyGigs.Users
-  alias BookMyGigsWeb.Users.Schemas.CreateUserInputs
+  alias BookMyGigsWeb.Users.Schemas
 
   tags(["Users"])
 
@@ -22,12 +22,12 @@ defmodule BookMyGigsWeb.Users.UsersController do
         example: "f1ccfa34-822c-4497-8f64-a9234e28ead0"
       ]
     ],
-    request_body: {"Create user inputs", "application/json", CreateUserInputs},
+    request_body: {"Create user input", "application/json", Schemas.CreateUserInput},
     responses: [
-      ok: {"User response", "application/json", Schemas.AccountResponse},
+      ok: {"User response", "application/json", Schemas.UserResponse},
       bad_request: "Invalid input values"
     ],
-    ok: "Account successfully created"
+    ok: "User successfully created"
   )
 
   def create(conn, %{"user" => user_params}) do
