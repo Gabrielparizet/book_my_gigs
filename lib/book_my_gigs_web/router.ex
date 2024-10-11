@@ -44,7 +44,7 @@ defmodule BookMyGigsWeb.Router do
 
     # ACCOUNTS ROUTES
     get "/accounts", AccountsController, :get
-    get "accounts/:id", AccountsController, :get_account_by_id
+    get "/accounts/:id", AccountsController, :get_account_by_id
     put "/accounts/:id", AccountsController, :update
     delete "/accounts/:id", AccountsController, :delete
   end
