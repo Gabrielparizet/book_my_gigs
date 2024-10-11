@@ -14,6 +14,7 @@ defmodule BookMyGigs.Accounts do
 
     defstruct [:id, :email, :password]
 
+    @type id :: String.t()
     @type t :: %__MODULE__{
             id: String.t(),
             email: String.t(),
