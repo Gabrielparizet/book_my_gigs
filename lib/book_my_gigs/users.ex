@@ -25,7 +25,7 @@ defmodule BookMyGigs.Users do
     }
   end
 
-  def create_user(account_id, %{"user" => {user_params}}) do
-    Storage.create_user(account_id, user_params)
+  def create_user(%{"user" => user_params}, account_id) do
+    Storage.create_user(user_params, account_id)
   end
 end

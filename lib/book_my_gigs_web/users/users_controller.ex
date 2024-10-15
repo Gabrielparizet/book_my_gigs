@@ -1,4 +1,4 @@
-defmodule BookMyGigsWeb.Users.UsersController do
+defmodule BookMyGigsWeb.UsersController do
   @moduledoc """
   The Users Controller
   """
@@ -28,11 +28,12 @@ defmodule BookMyGigsWeb.Users.UsersController do
   )
 
   def create(conn, params) do
-    account_id = conn.path_params["id"]
+
+    account_id = conn.private[:guardian_default_resource].id
 
     user =
       params
-      |> User.create_user(account_id, params)
+      |> Users.create_user(account_id)
       |> Jason.encode!()
 
     conn
