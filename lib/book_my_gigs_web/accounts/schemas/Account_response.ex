@@ -16,7 +16,8 @@ defmodule BookMyGigsWeb.Accounts.Schemas.AccountResponse do
         type: :object,
         properties: %{
           email: %Schema{
-            type: :string
+            type: :string,
+            format: :email
           }
         }
       }
