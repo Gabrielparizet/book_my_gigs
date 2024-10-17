@@ -16,16 +16,20 @@ defmodule BookMyGigs.Users do
     defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday]
 
     @type t :: %__MODULE__{
-      id: String.t(),
-      account_id: Accounts.Account.id(),
-      username: String.t(),
-      first_name: String.t(),
-      last_name: String.t(),
-      birthday: Date.t()
-    }
+            id: String.t(),
+            account_id: Accounts.Account.id(),
+            username: String.t(),
+            first_name: String.t(),
+            last_name: String.t(),
+            birthday: Date.t()
+          }
   end
 
   def create_user(%{"user" => user_params}, account_id) do
     Storage.create_user(user_params, account_id)
+  end
+
+  def to_context_struct(%Storage.User{} = index_db) do
+    struct(User, Map.from_struct(index_db))
   end
 end

@@ -18,7 +18,7 @@ defmodule BookMyGigs.Accounts do
     @type t :: %__MODULE__{
             id: String.t(),
             email: String.t(),
-            password: String.t(),
+            password: String.t()
           }
   end
 

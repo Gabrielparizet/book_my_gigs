@@ -28,7 +28,6 @@ defmodule BookMyGigsWeb.UsersController do
   )
 
   def create(conn, params) do
-
     account_id = conn.private[:guardian_default_resource].id
 
     user =
