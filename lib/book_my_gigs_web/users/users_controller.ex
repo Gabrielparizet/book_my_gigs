@@ -19,7 +19,7 @@ defmodule BookMyGigsWeb.UsersController do
         example: "61492a85-3946-4b62-8887-2952af807c26"
       ]
     ],
-    request_body: {"Update account input", "application/json", Schemas.CreateUserInput},
+    request_body: {"Create user input", "application/json", Schemas.CreateUserInput},
     responses: [
       ok: {"User response", "application/json", Schemas.UserResponse},
       bad_request: "Invalid input values"
