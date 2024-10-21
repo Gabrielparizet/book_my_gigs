@@ -1,6 +1,6 @@
 defmodule BookMyGigs.Users.Storage.UserLocation do
   @moduledoc """
-  The Ecto Schema for a users_locations join table
+  The Ecto Schema for the users_locations join table
   """
 
   use Ecto.Schema
@@ -22,6 +22,6 @@ defmodule BookMyGigs.Users.Storage.UserLocation do
     user_location
     |> cast(attrs, [:user_id, :location_id])
     |> validate_required([:user_id, :location_id])
-    |> unique_constraint(:user_id, :locations_id)
+    |> unique_constraint(:user_id, :location_id)
   end
 end
