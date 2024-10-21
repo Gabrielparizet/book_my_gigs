@@ -6,10 +6,15 @@ defmodule BookMyGigs.Genres.Storage.Genre do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BookMyGigs.Users.Storage.User
+  alias BookMyGigs.Users.Storage.UserGenre
+
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "genres" do
     field(:name, :string)
+
+    many_to_many(:users, User, join_through: UserGenre)
 
     timestamps(type: :utc_datetime)
   end

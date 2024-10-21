@@ -7,8 +7,11 @@ defmodule BookMyGigs.Users.Storage.User do
   import Ecto.Changeset
 
   alias BookMyGigs.Accounts.Storage.Account
+  alias BookMyGigs.Genres.Storage.Genre
   alias BookMyGigs.Locations.Storage.Location
+  alias BookMyGigs.Users.Storage.UserGenre
   alias BookMyGigs.Users.Storage.UserLocation
+
 
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
@@ -20,6 +23,7 @@ defmodule BookMyGigs.Users.Storage.User do
 
     belongs_to(:account, Account, type: Ecto.UUID)
     many_to_many(:locations, Location, join_through: UserLocation)
+    many_to_many(:genres, Genre, join_through: UserGenre)
 
     timestamps(type: :utc_datetime)
   end
