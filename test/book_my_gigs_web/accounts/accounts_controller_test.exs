@@ -30,8 +30,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       |> authenticate_user(account)
       |> get("/api/accounts")
 
-    json_data =
-      json_response(conn_out, 200)
+    json_data = json_response(conn_out, 200)
 
     assert json_data == [
              %{
@@ -60,8 +59,7 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
       |> put_req_header("content-type", "application/json")
       |> post("/accounts", account_payload)
 
-    json_data =
-      json_response(conn_out, 201)
+    json_data = json_response(conn_out, 201)
 
     assert json_data == %{
              "account" => %{
