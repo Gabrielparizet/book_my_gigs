@@ -12,7 +12,6 @@ defmodule BookMyGigs.Users.Storage.User do
   alias BookMyGigs.Users.Storage.UserGenre
   alias BookMyGigs.Users.Storage.UserLocation
 
-
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "users" do
