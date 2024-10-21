@@ -38,8 +38,7 @@ defmodule BookMyGigs.Accounts do
   def create_account(%{"account" => account_params}) do
     hash_password = hash_password(account_params["password"])
 
-    account_params =
-      Map.put(account_params, "password", hash_password)
+    account_params = Map.put(account_params, "password", hash_password)
 
     case Storage.create_account(account_params) do
       {:ok, account} -> {:ok, delete_password_from_response(account)}

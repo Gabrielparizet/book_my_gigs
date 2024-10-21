@@ -157,8 +157,7 @@ defmodule BookMyGigsWeb.AccountsController do
   def sign_in(conn, %{"account" => %{"email" => email, "password" => password}}) do
     case BookMyGigs.Guardian.authenticate(email, password) do
       {:ok, account, token} ->
-        response =
-          Jason.encode!(%{account: Accounts.to_context_struct(account), token: token})
+        response = Jason.encode!(%{account: Accounts.to_context_struct(account), token: token})
 
         conn
         |> put_resp_content_type("application/json")
