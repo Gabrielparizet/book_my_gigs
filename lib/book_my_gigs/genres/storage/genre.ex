@@ -6,6 +6,8 @@ defmodule BookMyGigs.Genres.Storage.Genre do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BookMyGigs.Events.Storage.Event
+  alias BookMyGigs.Events.Storage.EventGenre
   alias BookMyGigs.Users.Storage.User
   alias BookMyGigs.Users.Storage.UserGenre
 
@@ -15,6 +17,7 @@ defmodule BookMyGigs.Genres.Storage.Genre do
     field(:name, :string)
 
     many_to_many(:users, User, join_through: UserGenre)
+    many_to_many(:events, Event, join_through: EventGenre)
 
     timestamps(type: :utc_datetime)
   end

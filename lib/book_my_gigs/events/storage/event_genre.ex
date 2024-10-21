@@ -1,18 +1,18 @@
-defmodule BookMyGigs.Users.Storage.UserGenre do
+defmodule BookMyGigs.Events.Storage.EventGenre do
   @moduledoc """
-  The Ecto Schema for the users_genres join table
+  The Ecto Schema for the events_genres join table
   """
 
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias BookMyGigs.Users.Storage.User
+  alias BookMyGigs.Events.Storage.Event
   alias BookMyGigs.Genres.Storage.Genre
 
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  schema "users_genres" do
-    belongs_to(:user, User, type: Ecto.UUID)
+  schema "events_genres" do
+    belongs_to(:event, Event, type: Ecto.UUID)
     belongs_to(:genre, Genre, type: Ecto.UUID)
 
     timestamps(type: :utc_datetime)
@@ -20,9 +20,9 @@ defmodule BookMyGigs.Users.Storage.UserGenre do
 
   def changeset(user_genre, attrs) do
     user_genre
-    |> cast(attrs, [:user_id, :genre_id])
-    |> validate_required([:user_id, :genre_id])
-    |> foreign_key_constraint(:user_id)
+    |> cast(attrs, [:event_id, :genre_id])
+    |> validate_required(:event_id, :genre_id)
+    |> foreign_key_constraint(:event_id)
     |> foreign_key_constraint(:genre_id)
   end
 end

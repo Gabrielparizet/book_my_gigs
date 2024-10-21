@@ -22,6 +22,7 @@ defmodule BookMyGigs.Users.Storage.UserLocation do
     user_location
     |> cast(attrs, [:user_id, :location_id])
     |> validate_required([:user_id, :location_id])
-    |> unique_constraint(:user_id, :location_id)
+    |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:location_id)
   end
 end
