@@ -27,6 +27,18 @@ defmodule BookMyGigsWeb.UsersController do
     |> send_resp(200, users)
   end
 
+  operation(:get_user_by_id,
+    summary: "Get user by id",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ]
+  )
+
   operation(:create,
     summary: "Create an user",
     parameters: [

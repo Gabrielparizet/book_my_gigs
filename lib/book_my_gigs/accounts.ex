@@ -28,7 +28,10 @@ defmodule BookMyGigs.Accounts do
   end
 
   def get_account_by_id!(id) do
-    Storage.get_account_by_id!(id)
+    id
+    |> Storage.get_account_by_id!()
+    |> to_context_struct()
+    |> delete_password_from_response()
   end
 
   def get_account_by_email(email) do

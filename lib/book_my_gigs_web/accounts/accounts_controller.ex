@@ -69,7 +69,7 @@ defmodule BookMyGigsWeb.AccountsController do
       ]
     ],
     responses: [
-      ok: {"Get accounts response", "application/json", Schemas.GetAccountsResponse}
+      ok: {"Get accounts response", "application/json", Schemas.GetAccountResponse}
     ],
     ok: "Account succesfsfully found"
   )
@@ -80,7 +80,6 @@ defmodule BookMyGigsWeb.AccountsController do
     account =
       account_id
       |> Accounts.get_account_by_id!()
-      |> Accounts.to_context_struct()
       |> Jason.encode!()
 
     conn

@@ -50,6 +50,7 @@ defmodule BookMyGigsWeb.Router do
 
     # USERS ROUTES
     get "/users", UsersController, :get
+    get "/users/:id", UsersController, :get_user_by_id
     post "/users", UsersController, :create
   end
 
