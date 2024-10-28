@@ -49,7 +49,8 @@ defmodule BookMyGigsWeb.Router do
     delete "/accounts/:id", AccountsController, :delete
 
     # USERS ROUTES
-    post "/users/", UsersController, :create
+    get "/users", UsersController, :get
+    post "/users", UsersController, :create
   end
 
   # Other scopes may use custom stacks.
