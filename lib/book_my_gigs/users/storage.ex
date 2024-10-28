@@ -15,6 +15,11 @@ defmodule BookMyGigs.Users.Storage do
     |> Enum.map(&Users.to_context_struct/1)
   end
 
+  def get_user_by_id!(id) do
+    Storage.User
+    |> Repo.get!(id)
+  end
+
   def create_user(user_params, account_id) do
     params = %{
       account_id: account_id,

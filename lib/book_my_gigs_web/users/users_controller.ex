@@ -36,8 +36,25 @@ defmodule BookMyGigsWeb.UsersController do
         schema: %Schema{type: :string, format: :uuid},
         example: "61492a85-3946-4b62-8887-2952af807c26"
       ]
-    ]
+    ],
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse}
+    ],
+    ok: "User successfully found"
   )
+
+  def get_user_by_id(conn, _params) do
+    user_id = conn.path_params["id"]
+
+    user =
+      user_id
+      |> Users.get_user_by_id!()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, user)
+  end
 
   operation(:create,
     summary: "Create an user",

@@ -37,6 +37,35 @@ defmodule BookMyGigsWeb.AccountsController do
     ok: "Account successfully created"
   )
 
+  operation(:get_account_by_id,
+  summary: "Get account by id",
+  parameters: [
+    account_id: [
+      in: :path,
+      description: "Account id",
+      schema: %Schema{type: :string, format: :uuid},
+      example: "61492a85-3946-4b62-8887-2952af807c26"
+    ]
+  ],
+  responses: [
+    ok: {"Get account response", "application/json", Schemas.GetAccountResponse}
+  ],
+  ok: "Account succesfsfully found"
+)
+
+def get_account_by_id(conn, _params) do
+  account_id = conn.path_params["id"]
+
+  account =
+    account_id
+    |> Accounts.get_account_by_id!()
+    |> Jason.encode!()
+
+  conn
+  |> put_resp_content_type("application/json")
+  |> send_resp(200, account)
+end
+
   def create(conn, params) do
     case Accounts.create_account(params) do
       {:ok, account} ->
@@ -56,35 +85,6 @@ defmodule BookMyGigsWeb.AccountsController do
         |> put_resp_content_type("application/json")
         |> send_resp(400, Jason.encode!(%{error: reason}))
     end
-  end
-
-  operation(:get_account_by_id,
-    summary: "Get account by id",
-    parameters: [
-      account_id: [
-        in: :path,
-        description: "Account id",
-        schema: %Schema{type: :string, format: :uuid},
-        example: "61492a85-3946-4b62-8887-2952af807c26"
-      ]
-    ],
-    responses: [
-      ok: {"Get accounts response", "application/json", Schemas.GetAccountResponse}
-    ],
-    ok: "Account succesfsfully found"
-  )
-
-  def get_account_by_id(conn, _params) do
-    account_id = conn.path_params["id"]
-
-    account =
-      account_id
-      |> Accounts.get_account_by_id!()
-      |> Jason.encode!()
-
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, account)
   end
 
   operation(:update,

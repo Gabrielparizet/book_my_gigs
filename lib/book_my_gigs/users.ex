@@ -29,6 +29,12 @@ defmodule BookMyGigs.Users do
     Storage.get_users()
   end
 
+  def get_user_by_id!(id) do
+    id
+    |> Storage.get_user_by_id!()
+    |> to_context_struct()
+  end
+
   def create_user(%{"user" => user_params}, account_id) do
     Storage.create_user(user_params, account_id)
   end
