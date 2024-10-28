@@ -15,7 +15,7 @@ defmodule BookMyGigsWeb.Users.Schemas.UpdateUserInput do
         type: :object,
         properties: %{
           username: %Schema{
-            type: :string,
+            type: :string
           },
           first_name: %Schema{
             type: :string

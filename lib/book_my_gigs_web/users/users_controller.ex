@@ -117,4 +117,30 @@ defmodule BookMyGigsWeb.UsersController do
     |> put_resp_content_type("application/json")
     |> send_resp(200, updated_user)
   end
+
+  operation(:delete,
+    summary: "Delete a user",
+    parameters: [
+      account_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: "User successfully deleted"
+    ],
+    ok: "User successfully deleted"
+  )
+
+  def delete(conn, _params) do
+    user_id = conn.path_params["id"]
+
+    response = Users.delete_user(user_id)
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, response)
+  end
 end

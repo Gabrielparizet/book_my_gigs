@@ -40,7 +40,17 @@ defmodule BookMyGigs.Users do
     Storage.create_user(user_params, account_id)
   end
 
-  def update_user(%{"user" => %{"username" => username, "first_name" => first_name, "last_name" => last_name, "birthday" => birthday} = user_params}, user_id) do
+  def update_user(
+        %{
+          "user" => %{
+            "username" => username,
+            "first_name" => first_name,
+            "last_name" => last_name,
+            "birthday" => birthday
+          }
+        },
+        user_id
+      ) do
     user = Storage.get_user_by_id!(user_id)
 
     params = %{
@@ -50,6 +60,7 @@ defmodule BookMyGigs.Users do
       "last_name" => last_name,
       "birthday" => Utils.DateUtils.parse_date(birthday)
     }
+
     Storage.update_user(params, user_id)
   end
 
@@ -107,6 +118,10 @@ defmodule BookMyGigs.Users do
     }
 
     Storage.update_user(params, user_id)
+  end
+
+  def delete_user(id) do
+    Storage.delete_user(id)
   end
 
   def to_context_struct(%Storage.User{} = index_db) do
