@@ -23,7 +23,7 @@ defmodule BookMyGigsWeb.Users.Schemas.GetUsersResponse do
         },
         account_id: %Schema{
           type: :string,
-          format: :uuid,
+          format: :uuid
         },
         first_name: %Schema{
           type: :string
