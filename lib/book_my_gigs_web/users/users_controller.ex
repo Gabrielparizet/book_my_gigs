@@ -12,7 +12,7 @@ defmodule BookMyGigsWeb.UsersController do
   operation(:get,
     summary: "Get all users",
     responses: [
-      ok: {"Get users response", "application/json", Schemas.GetUsersResponse},
+      ok: {"Get users response", "application/json", Schemas.GetUsersResponse}
     ],
     ok: "Users successfully found"
   )
@@ -25,6 +25,35 @@ defmodule BookMyGigsWeb.UsersController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, users)
+  end
+
+  operation(:get_user_by_id,
+    summary: "Get user by id",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse}
+    ],
+    ok: "User successfully found"
+  )
+
+  def get_user_by_id(conn, _params) do
+    user_id = conn.path_params["id"]
+
+    user =
+      user_id
+      |> Users.get_user_by_id!()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, user)
   end
 
   operation(:create,
@@ -56,5 +85,36 @@ defmodule BookMyGigsWeb.UsersController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, user)
+  end
+
+  operation(:update,
+    summary: "Update a user",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    request_body: {"Update user input", "application/json", Schemas.UpdateUserInput},
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse},
+      bad_request: "Invalid input values"
+    ],
+    ok: "User successfully updated"
+  )
+
+  def update(conn, params) do
+    user_id = conn.path_params["id"]
+
+    updated_user =
+      params
+      |> Users.update_user(user_id)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, updated_user)
   end
 end
