@@ -52,6 +52,7 @@ defmodule BookMyGigsWeb.Router do
     get "/users", UsersController, :get
     get "/users/:id", UsersController, :get_user_by_id
     post "/users", UsersController, :create
+    put "/users/:id", UsersController, :update
   end
 
   # Other scopes may use custom stacks.

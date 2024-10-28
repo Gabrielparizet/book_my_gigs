@@ -3,6 +3,8 @@ defmodule BookMyGigs.Users.Storage do
   Module providing functionalities to interact with the users table.
   """
 
+  import Ecto.Query
+
   alias BookMyGigs.Accounts.Storage.Account
   alias BookMyGigs.Users
   alias BookMyGigs.Users.Storage
@@ -44,5 +46,61 @@ defmodule BookMyGigs.Users.Storage do
             {:error, changeset}
         end
     end
+  end
+
+  def update_user(params, user_id) do
+    params =
+      params
+      |> Map.take(["username", "first_name", "last_name", "birthday", "account_id"])
+      |> Enum.into(%{}, fn {key, value} -> {String.to_atom(key), value} end)
+
+    %Storage.User{id: user_id}
+    |> Storage.User.changeset(params)
+    |> Repo.update!()
+    |> Users.to_context_struct
+  end
+
+  def get_username_by_id(id) do
+    query =
+      from(
+        u in Storage.User,
+        where: u.id == ^id,
+        select: u.username
+      )
+
+    Repo.one(query)
+  end
+
+  def get_first_name_by_id(id) do
+    query =
+      from(
+        u in Storage.User,
+        where: u.id == ^id,
+        select: u.first_name
+      )
+
+    Repo.one(query)
+  end
+
+  def get_last_name_by_id(id) do
+    query =
+      from(
+        u in Storage.User,
+        where: u.id == ^id,
+        select: u.last_name
+      )
+
+    Repo.one(query)
+  end
+
+  def get_birthday_by_id(id) do
+    query =
+      from(
+        u in Storage.User,
+        where: u.id == ^id,
+        select: u.birthday
+      )
+
+    Repo.one(query)
   end
 end

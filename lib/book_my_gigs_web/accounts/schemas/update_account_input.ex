@@ -1,12 +1,14 @@
 defmodule BookMyGigsWeb.Accounts.Schemas.UpdateAccountInput do
-  @moduledoc false
+  @moduledoc """
+  Specs describing the input for updating an account
+  """
   alias OpenApiSpex.Schema
 
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
     title: "Update account input",
-    description: "Valid input values to create an account",
+    description: "Valid input values to update an account",
     type: :object,
     properties: %{
       account: %Schema{

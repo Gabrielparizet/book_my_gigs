@@ -31,7 +31,8 @@ defmodule BookMyGigsWeb.Users.Schemas.UserResponse do
       },
       birthday: %Schema{
         type: :string,
-        format: :date
+        format: :date,
+        description: "Date in ISO 8601 format (YYYY-MM-DD)"
       }
     },
     example: %{
