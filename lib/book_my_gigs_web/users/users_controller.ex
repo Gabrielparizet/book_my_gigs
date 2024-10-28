@@ -9,6 +9,24 @@ defmodule BookMyGigsWeb.UsersController do
   alias BookMyGigsWeb.Users.Schemas
   alias OpenApiSpex.Schema
 
+  operation(:get,
+    summary: "Get all users",
+    responses: [
+      ok: {"Get users response", "application/json", Schemas.GetUsersRespoonse},
+    ],
+    ok: "Users successfully found"
+  )
+
+  def get(conn, _params) do
+    users =
+      Users.get_users()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, users)
+  end
+
   operation(:create,
     summary: "Create an user",
     parameters: [

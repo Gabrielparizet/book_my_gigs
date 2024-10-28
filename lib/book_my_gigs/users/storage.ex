@@ -9,6 +9,12 @@ defmodule BookMyGigs.Users.Storage do
   alias BookMyGigs.Utils
   alias BookMyGigs.Repo
 
+  def get_users do
+    Storage.User
+    |> Repo.all()
+    |> Enum.map(&Users.to_context_struct/1)
+  end
+
   def create_user(user_params, account_id) do
     params = %{
       account_id: account_id,
