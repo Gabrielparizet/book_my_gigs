@@ -12,7 +12,7 @@ defmodule BookMyGigsWeb.UsersController do
   operation(:get,
     summary: "Get all users",
     responses: [
-      ok: {"Get users response", "application/json", Schemas.GetUsersRespoonse},
+      ok: {"Get users response", "application/json", Schemas.GetUsersResponse},
     ],
     ok: "Users successfully found"
   )
