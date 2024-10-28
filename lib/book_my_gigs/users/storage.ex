@@ -57,7 +57,19 @@ defmodule BookMyGigs.Users.Storage do
     %Storage.User{id: user_id}
     |> Storage.User.changeset(params)
     |> Repo.update!()
-    |> Users.to_context_struct
+    |> Users.to_context_struct()
+  end
+
+  def delete_user(id) do
+    user = Repo.get!(Storage.User, id)
+
+    case Repo.delete(user) do
+      {:ok, _struct} ->
+        "User successfully deleted"
+
+      {:error, _changeset} ->
+        "Something went wrong"
+    end
   end
 
   def get_username_by_id(id) do
