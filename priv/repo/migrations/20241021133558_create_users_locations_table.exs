@@ -11,6 +11,6 @@ defmodule BookMyGigs.Repo.Migrations.CreateUsersLocationsTable do
     end
 
     create unique_index(:users_locations, [:user_id])
-    create unique_index(:users_locations, [:location_id])
+    create index(:users_locations, [:location_id])
   end
 end

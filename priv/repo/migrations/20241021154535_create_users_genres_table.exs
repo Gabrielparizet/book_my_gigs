@@ -1,4 +1,4 @@
-defmodule BookMyGigs.Repo.Migrations.CreateGenresLocationsTable do
+defmodule BookMyGigs.Repo.Migrations.CreateUsersGenresTable do
   use Ecto.Migration
 
   def change do
@@ -10,7 +10,9 @@ defmodule BookMyGigs.Repo.Migrations.CreateGenresLocationsTable do
       timestamps(type: :utc_datetime)
     end
 
-    create unique_index(:users_genres, [:user_id])
-    create unique_index(:users_genres, [:genre_id])
+    create unique_index(:users_genres, [:user_id, :genre_id])
+
+    create index(:users_genres, [:user_id])
+    create index(:users_genres, [:genre_id])
   end
 end

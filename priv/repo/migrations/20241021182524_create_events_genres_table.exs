@@ -10,7 +10,9 @@ defmodule BookMyGigs.Repo.Migrations.CreateEventsGenresTable do
       timestamps(type: :utc_datetime)
     end
 
-    create unique_index(:events_genres, [:event_id])
-    create unique_index(:events_genres, [:genre_id])
+    create unique_index(:events_genres, [:event_id, :genre_id])
+
+    create index(:events_genres, [:event_id])
+    create index(:events_genres, [:genre_id])
   end
 end

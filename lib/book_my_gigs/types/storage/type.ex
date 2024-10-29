@@ -7,14 +7,13 @@ defmodule BookMyGigs.Types.Storage.Type do
   import Ecto.Changeset
 
   alias BookMyGigs.Events.Storage.Event
-  alias BookMyGigs.Events.Storage.EventType
 
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "types" do
     field(:name, :string)
 
-    many_to_many(:events, Event, join_through: EventType)
+    has_many(:events, Event, on_delete: :delete_all)
 
     timestamps(type: :utc_datetime)
   end

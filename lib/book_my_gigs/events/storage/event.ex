@@ -7,7 +7,6 @@ defmodule BookMyGigs.Events.Storage.Event do
   import Ecto.Changeset
 
   alias BookMyGigs.Events.Storage.EventGenre
-  alias BookMyGigs.Events.Storage.EventType
   alias BookMyGigs.Genres.Storage.Genre
   alias BookMyGigs.Locations.Storage.Location
   alias BookMyGigs.Types.Storage.Type
@@ -24,8 +23,8 @@ defmodule BookMyGigs.Events.Storage.Event do
 
     belongs_to(:user, User, type: Ecto.UUID)
     belongs_to(:location, Location, type: Ecto.UUID)
+    belongs_to(:type, Type, type: Ecto.UUID)
     many_to_many(:genres, Genre, join_through: EventGenre)
-    many_to_many(:types, Type, join_through: EventType)
 
     timestamps(type: :utc_datetime)
   end
@@ -39,7 +38,8 @@ defmodule BookMyGigs.Events.Storage.Event do
       :address,
       :url,
       :user_id,
-      :location_id
+      :location_id,
+      :type_id
     ])
     |> validate_required([
       :date_and_time,
@@ -47,7 +47,8 @@ defmodule BookMyGigs.Events.Storage.Event do
       :address,
       :url,
       :user_id,
-      :location_id
+      :location_id,
+      :type_id
     ])
     |> validate_length(:desciption, max: 3000)
     |> validate_url(:url)
