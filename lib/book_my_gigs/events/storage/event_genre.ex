@@ -18,8 +18,8 @@ defmodule BookMyGigs.Events.Storage.EventGenre do
     timestamps(type: :utc_datetime)
   end
 
-  def changeset(user_genre, attrs) do
-    user_genre
+  def changeset(event_genre, attrs) do
+    event_genre
     |> cast(attrs, [:event_id, :genre_id])
     |> validate_required(:event_id, :genre_id)
     |> foreign_key_constraint(:event_id)
