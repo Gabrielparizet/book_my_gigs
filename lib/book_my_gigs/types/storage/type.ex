@@ -1,4 +1,4 @@
-defmodule BookMyGigs.Types.Folder.Type do
+defmodule BookMyGigs.Types.Storage.Type do
   @moduledoc """
   The Ecto Schema for a type
   """
