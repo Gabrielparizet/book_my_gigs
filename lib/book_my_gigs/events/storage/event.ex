@@ -7,8 +7,10 @@ defmodule BookMyGigs.Events.Storage.Event do
   import Ecto.Changeset
 
   alias BookMyGigs.Events.Storage.EventGenre
+  alias BookMyGigs.Events.Storage.EventType
   alias BookMyGigs.Genres.Storage.Genre
   alias BookMyGigs.Locations.Storage.Location
+  alias BookMyGigs.Types.Storage.Type
   alias BookMyGigs.Users.Storage.User
 
   @schema_prefix "public"
@@ -23,6 +25,7 @@ defmodule BookMyGigs.Events.Storage.Event do
     belongs_to(:user, User, type: Ecto.UUID)
     belongs_to(:location, Location, type: Ecto.UUID)
     many_to_many(:genres, Genre, join_through: EventGenre)
+    many_to_many(:types, Type, join_through: EventType)
 
     timestamps(type: :utc_datetime)
   end
@@ -36,8 +39,7 @@ defmodule BookMyGigs.Events.Storage.Event do
       :address,
       :url,
       :user_id,
-      :location_id,
-      :genre_id
+      :location_id
     ])
     |> validate_required([
       :date_and_time,
@@ -45,15 +47,13 @@ defmodule BookMyGigs.Events.Storage.Event do
       :address,
       :url,
       :user_id,
-      :location_id,
-      :genre_id
+      :location_id
     ])
     |> validate_length(:desciption, max: 3000)
     |> validate_url(:url)
     |> unique_constraint(:url)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:location_id)
-    |> foreign_key_constraint(:genre_id)
   end
 
   defp validate_url(changeset, field) do
