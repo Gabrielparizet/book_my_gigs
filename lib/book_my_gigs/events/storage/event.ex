@@ -50,11 +50,12 @@ defmodule BookMyGigs.Events.Storage.Event do
       :location_id,
       :type_id
     ])
-    |> validate_length(:desciption, max: 3000)
+    |> validate_length(:description, max: 3000)
     |> validate_url(:url)
     |> unique_constraint(:url)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:location_id)
+    |> foreign_key_constraint(:type_id)
   end
 
   defp validate_url(changeset, field) do

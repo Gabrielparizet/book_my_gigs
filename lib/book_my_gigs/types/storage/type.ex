@@ -13,7 +13,7 @@ defmodule BookMyGigs.Types.Storage.Type do
   schema "types" do
     field(:name, :string)
 
-    has_many(:events, Event, on_delete: :delete_all)
+    has_many(:events, Event)
 
     timestamps(type: :utc_datetime)
   end

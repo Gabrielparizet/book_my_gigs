@@ -21,8 +21,9 @@ defmodule BookMyGigs.Events.Storage.EventGenre do
   def changeset(event_genre, attrs) do
     event_genre
     |> cast(attrs, [:event_id, :genre_id])
-    |> validate_required(:event_id, :genre_id)
+    |> validate_required([:event_id, :genre_id])
     |> foreign_key_constraint(:event_id)
     |> foreign_key_constraint(:genre_id)
+    |> unique_constraint([:event_id, :genre_id])
   end
 end

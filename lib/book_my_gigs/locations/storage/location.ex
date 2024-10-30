@@ -6,15 +6,16 @@ defmodule BookMyGigs.Locations.Storage.Location do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BookMyGigs.Events.Storage.Event
   alias BookMyGigs.Users.Storage.User
-  alias BookMyGigs.Users.Storage.UserLocation
 
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "locations" do
     field(:name, :string)
 
-    many_to_many(:users, User, join_through: UserLocation)
+    has_many(:users, User)
+    has_many(:events, Event)
 
     timestamps(type: :utc_datetime)
   end

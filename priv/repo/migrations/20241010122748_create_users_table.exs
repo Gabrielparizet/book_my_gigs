@@ -5,6 +5,7 @@ defmodule BookMyGigs.Repo.Migrations.CreateUsersTable do
     create table(:users, primary_key: false, prefix: "public") do
       add(:id, :uuid, primary_key: true)
       add(:account_id, references(:accounts, type: :uuid, on_delete: :delete_all), null: false)
+      add(:location_id, references(:locations, type: :uuid, on_delete: :restrict), null: false)
       add(:username, :string)
       add(:first_name, :string)
       add(:last_name, :string)

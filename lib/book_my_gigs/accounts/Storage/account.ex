@@ -5,12 +5,14 @@ defmodule BookMyGigs.Accounts.Storage.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias BookMyGigs.Users.Storage.User
+
   @schema_prefix "public"
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "accounts" do
     field(:email, :string)
     field(:password, :string)
-    has_one(:user, BookMyGigs.Users.Storage.User)
+    has_one(:user, User, on_delete: :delete_all)
 
     timestamps(type: :utc_datetime)
   end
@@ -24,8 +26,12 @@ defmodule BookMyGigs.Accounts.Storage.Account do
     )
     |> validate_length(:email, max: 160)
     |> validate_length(:password, min: 8)
-    |> validate_format(:password, ~r/[a-z]/, message: "must include at least one lowercase letter")
-    |> validate_format(:password, ~r/[A-Z]/, message: "must include at least one uppercase letter")
+    |> validate_format(:password, ~r/[a-z]/,
+      message: "must include at least one lowercase letter"
+    )
+    |> validate_format(:password, ~r/[A-Z]/,
+      message: "must include at least one uppercase letter"
+    )
     |> validate_format(:password, ~r/[0-9]/, message: "must include at least one number")
     |> validate_format(:password, ~r/[?!.,@*€$\-_#:]/,
       message: "must include at least one special character (?!.,@*€$-_#:)"
