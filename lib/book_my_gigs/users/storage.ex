@@ -115,4 +115,16 @@ defmodule BookMyGigs.Users.Storage do
 
     Repo.one(query)
   end
+
+  def update_user_location(user, location_id) do
+    params =
+      user
+      |> Map.from_struct()
+      |> Map.put(:location_id, location_id)
+
+    %Storage.User{id: user.id}
+    |> Storage.User.changeset(params)
+    |> Repo.update!()
+    |> Users.to_context_struct()
+  end
 end

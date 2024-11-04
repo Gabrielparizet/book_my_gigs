@@ -54,6 +54,9 @@ defmodule BookMyGigsWeb.Router do
     post "/users", UsersController, :create
     put "/users/:id", UsersController, :update
     delete "/users/:id", UsersController, :delete
+
+    # USERS LOCATIONS ROUTES
+    post "/users/:id/locations", UsersController, :update_user_location
   end
 
   # Other scopes may use custom stacks.
