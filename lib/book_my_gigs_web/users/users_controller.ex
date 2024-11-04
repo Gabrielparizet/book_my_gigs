@@ -121,7 +121,7 @@ defmodule BookMyGigsWeb.UsersController do
   operation(:delete,
     summary: "Delete a user",
     parameters: [
-      account_id: [
+      user_id: [
         in: :path,
         description: "User id",
         schema: %Schema{type: :string, format: :uuid},
@@ -142,5 +142,36 @@ defmodule BookMyGigsWeb.UsersController do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, response)
+  end
+
+  operation(:add_user_location,
+    summary: "Add locations to a user",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    request_body: {"Add user location", "application/json", Schemas.AddUserLocation},
+    responses: [
+      ok: {"User location", "application/json", Schemas.UserLocation},
+      bad_request: "Invalid input values"
+    ],
+    ok: "User successfully created"
+  )
+
+  def update_user_location(conn, params) do
+    user_id = conn.path_params["id"]
+
+    user_location =
+      user_id
+      |> Users.update_user_location(params)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, user_location)
   end
 end

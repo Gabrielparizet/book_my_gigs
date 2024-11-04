@@ -4,6 +4,7 @@ defmodule BookMyGigs.Users do
   """
 
   alias BookMyGigs.Accounts
+  alias BookMyGigs.Locations
   alias BookMyGigs.Users.Storage
   alias BookMyGigs.Utils
 
@@ -14,7 +15,7 @@ defmodule BookMyGigs.Users do
 
     @derive Jason.Encoder
 
-    defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday]
+    defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday, :location_id]
 
     @type t :: %__MODULE__{
             id: String.t(),
@@ -22,7 +23,8 @@ defmodule BookMyGigs.Users do
             username: String.t(),
             first_name: String.t(),
             last_name: String.t(),
-            birthday: Date.t()
+            birthday: Date.t(),
+            location_id: String.t() | nil
           }
   end
 
@@ -122,6 +124,14 @@ defmodule BookMyGigs.Users do
 
   def delete_user(id) do
     Storage.delete_user(id)
+  end
+
+  def update_user_location(user_id, %{"location" => location_name}) do
+    location = Locations.get_location_by_city!(location_name)
+    user = get_user_by_id!(user_id)
+
+    Storage.update_user_location(user, location.id)
+    |> IO.inspect(label: "here")
   end
 
   def to_context_struct(%Storage.User{} = index_db) do

@@ -20,6 +20,7 @@ defmodule BookMyGigs.Users.Storage do
   def get_user_by_id!(id) do
     Storage.User
     |> Repo.get!(id)
+    |> IO.inspect(label: "here")
   end
 
   def create_user(user_params, account_id) do
@@ -114,5 +115,17 @@ defmodule BookMyGigs.Users.Storage do
       )
 
     Repo.one(query)
+  end
+
+  def update_user_location(user, location_id) do
+    params =
+      user
+      |> Map.from_struct()
+      |> Map.put_new(:location_id, location_id)
+
+    %Storage.User{id: user.id}
+    |> Storage.User.changeset(params)
+    |> Repo.update!()
+    |> Users.to_context_struct()
   end
 end

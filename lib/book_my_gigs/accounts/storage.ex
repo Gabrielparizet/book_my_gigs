@@ -1,6 +1,6 @@
 defmodule BookMyGigs.Accounts.Storage do
   @moduledoc """
-  Module providing functionalties to interact with the accounts table.
+  Module providing functionalities to interact with the accounts table.
   """
 
   import Ecto.Query

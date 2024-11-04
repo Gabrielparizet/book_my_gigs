@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.Users.Schemas.CreateUserInput do
   @moduledoc """
-    Specs describing the response when creating an user.
+    Specs describing the response when creating a user.
   """
 
   alias OpenApiSpex.Schema
@@ -8,8 +8,8 @@ defmodule BookMyGigsWeb.Users.Schemas.CreateUserInput do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Create User Input",
-    description: "Valid input values to create an user",
+    title: "Create user input",
+    description: "Valid input values to create a user",
     type: :object,
     properties: %{
       user: %Schema{

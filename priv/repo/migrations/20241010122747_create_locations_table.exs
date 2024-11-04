@@ -12,6 +12,6 @@ defmodule BookMyGigs.Repo.Migrations.CreateLocationsTable do
       timestamps(type: :utc_datetime)
     end
 
-    create unique_index(:locations, [:city])
+    create unique_index(:locations, [:city, :region])
   end
 end
