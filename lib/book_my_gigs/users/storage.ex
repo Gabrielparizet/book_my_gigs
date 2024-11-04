@@ -20,7 +20,6 @@ defmodule BookMyGigs.Users.Storage do
   def get_user_by_id!(id) do
     Storage.User
     |> Repo.get!(id)
-    |> IO.inspect(label: "here")
   end
 
   def create_user(user_params, account_id) do
@@ -121,7 +120,7 @@ defmodule BookMyGigs.Users.Storage do
     params =
       user
       |> Map.from_struct()
-      |> Map.put_new(:location_id, location_id)
+      |> Map.put(:location_id, location_id)
 
     %Storage.User{id: user.id}
     |> Storage.User.changeset(params)

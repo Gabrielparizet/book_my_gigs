@@ -35,6 +35,11 @@ defmodule BookMyGigsWeb.Users.Schemas.GetUsersResponse do
           type: :string,
           format: :date,
           description: "Date in ISO 8601 format (YYYY-MM-DD)"
+        },
+        location_id: %Schema{
+          type: :string,
+          format: :uuid,
+          nullable: true
         }
       }
     },
@@ -45,7 +50,8 @@ defmodule BookMyGigsWeb.Users.Schemas.GetUsersResponse do
         account_id: "75a95cb3-379c-477e-b578-cf4503c37614",
         first_name: "John",
         last_name: "Doe",
-        birthday: "1990-01-01"
+        birthday: "1990-01-01",
+        location_id: nil
       },
       %{
         id: "fc93394f-9d13-4726-aa2b-aaa43c0f60eb",
@@ -53,7 +59,8 @@ defmodule BookMyGigsWeb.Users.Schemas.GetUsersResponse do
         account_id: "75a95cb3-379c-477e-b578-cf4503c37615",
         first_name: "Laura",
         last_name: "Palmer",
-        birthday: "1990-01-01"
+        birthday: "1990-01-01",
+        location_id: "75a95cb3-379c-477e-b578-cf4503c37617"
       }
     ]
   })

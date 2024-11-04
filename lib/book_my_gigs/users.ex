@@ -131,7 +131,6 @@ defmodule BookMyGigs.Users do
     user = get_user_by_id!(user_id)
 
     Storage.update_user_location(user, location.id)
-    |> IO.inspect(label: "here")
   end
 
   def to_context_struct(%Storage.User{} = index_db) do

@@ -3,8 +3,6 @@ defmodule BookMyGigs.Locations.Storage do
   Module providing functionalities to interact with the locations table.
   """
 
-  import Ecto.Query
-
   alias BookMyGigs.Locations.Storage
   alias BookMyGigs.Repo
 

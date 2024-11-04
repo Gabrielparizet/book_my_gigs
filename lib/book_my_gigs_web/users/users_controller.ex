@@ -144,7 +144,7 @@ defmodule BookMyGigsWeb.UsersController do
     |> send_resp(200, response)
   end
 
-  operation(:add_user_location,
+  operation(:update_user_location,
     summary: "Add locations to a user",
     parameters: [
       user_id: [
@@ -156,7 +156,7 @@ defmodule BookMyGigsWeb.UsersController do
     ],
     request_body: {"Add user location", "application/json", Schemas.AddUserLocation},
     responses: [
-      ok: {"User location", "application/json", Schemas.UserLocation},
+      ok: {"User Response", "application/json", Schemas.UserResponse},
       bad_request: "Invalid input values"
     ],
     ok: "User successfully created"
