@@ -6,20 +6,20 @@ defmodule BookMyGigs.Users.Storage do
   import Ecto.Query
 
   alias BookMyGigs.Accounts.Storage.Account
-  alias BookMyGigs.Users
   alias BookMyGigs.Users.Storage
   alias BookMyGigs.Utils
   alias BookMyGigs.Repo
 
   def get_users do
     Storage.User
+    |> preload(:location)
     |> Repo.all()
-    |> Enum.map(&Users.to_context_struct/1)
   end
 
   def get_user_by_id!(id) do
     Storage.User
     |> Repo.get!(id)
+    |> Repo.preload(:location)
   end
 
   def create_user(user_params, account_id) do
@@ -40,7 +40,7 @@ defmodule BookMyGigs.Users.Storage do
 
         case Repo.insert(changeset) do
           {:ok, user} ->
-            Users.to_context_struct(user)
+            Repo.preload(user, :location)
 
           {:error, changeset} ->
             {:error, changeset}
@@ -51,13 +51,13 @@ defmodule BookMyGigs.Users.Storage do
   def update_user(params, user_id) do
     params =
       params
-      |> Map.take(["username", "first_name", "last_name", "birthday", "account_id"])
+      |> Map.take(["username", "first_name", "last_name", "birthday", "account_id", "location_id"])
       |> Enum.into(%{}, fn {key, value} -> {String.to_atom(key), value} end)
 
     %Storage.User{id: user_id}
     |> Storage.User.changeset(params)
     |> Repo.update!()
-    |> Users.to_context_struct()
+    |> Repo.preload(:location)
   end
 
   def delete_user(id) do
@@ -125,6 +125,6 @@ defmodule BookMyGigs.Users.Storage do
     %Storage.User{id: user.id}
     |> Storage.User.changeset(params)
     |> Repo.update!()
-    |> Users.to_context_struct()
+    |> Repo.preload(:location)
   end
 end

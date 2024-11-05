@@ -15,7 +15,7 @@ defmodule BookMyGigs.Users do
 
     @derive Jason.Encoder
 
-    defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday, :location_id]
+    defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday, :location]
 
     @type t :: %__MODULE__{
             id: String.t(),
@@ -24,22 +24,29 @@ defmodule BookMyGigs.Users do
             first_name: String.t(),
             last_name: String.t(),
             birthday: Date.t(),
-            location_id: String.t() | nil
+            location: String.t() | nil
           }
   end
 
   def get_users() do
-    Storage.get_users()
+    users = Storage.get_users()
+
+    users
+    |> Enum.map(&get_user_location(&1))
+    |> Enum.map(&to_context_struct/1)
   end
 
   def get_user_by_id!(id) do
     id
     |> Storage.get_user_by_id!()
+    |> get_user_location()
     |> to_context_struct()
   end
 
   def create_user(%{"user" => user_params}, account_id) do
-    Storage.create_user(user_params, account_id)
+    user_params
+    |> Storage.create_user(account_id)
+    |> to_context_struct()
   end
 
   def update_user(
@@ -60,10 +67,14 @@ defmodule BookMyGigs.Users do
       "account_id" => user.account_id,
       "first_name" => first_name,
       "last_name" => last_name,
-      "birthday" => Utils.DateUtils.parse_date(birthday)
+      "birthday" => Utils.DateUtils.parse_date(birthday),
+      "location_id" => user.location_id
     }
 
-    Storage.update_user(params, user_id)
+    params
+    |> Storage.update_user(user_id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def update_user(%{"user" => %{"username" => username}}, user_id) do
@@ -74,10 +85,14 @@ defmodule BookMyGigs.Users do
       "account_id" => user.account_id,
       "first_name" => user.first_name,
       "last_name" => user.last_name,
-      "birthday" => user.birthday
+      "birthday" => user.birthday,
+      "location_id" => user.location_id
     }
 
-    Storage.update_user(params, user_id)
+    params
+    |> Storage.update_user(user_id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def update_user(%{"user" => %{"first_name" => first_name}}, user_id) do
@@ -88,10 +103,14 @@ defmodule BookMyGigs.Users do
       "account_id" => user.account_id,
       "first_name" => first_name,
       "last_name" => user.last_name,
-      "birthday" => user.birthday
+      "birthday" => user.birthday,
+      "location_id" => user.location_id
     }
 
-    Storage.update_user(params, user_id)
+    params
+    |> Storage.update_user(user_id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def update_user(%{"user" => %{"last_name" => last_name}}, user_id) do
@@ -102,10 +121,14 @@ defmodule BookMyGigs.Users do
       "account_id" => user.account_id,
       "first_name" => user.first_name,
       "last_name" => last_name,
-      "birthday" => user.birthday
+      "birthday" => user.birthday,
+      "location_id" => user.location_id
     }
 
-    Storage.update_user(params, user_id)
+    params
+    |> Storage.update_user(user_id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def update_user(%{"user" => %{"birthday" => birthday}}, user_id) do
@@ -116,10 +139,14 @@ defmodule BookMyGigs.Users do
       "account_id" => user.account_id,
       "first_name" => user.first_name,
       "last_name" => user.last_name,
-      "birthday" => Utils.DateUtils.parse_date(birthday)
+      "birthday" => Utils.DateUtils.parse_date(birthday),
+      "location_id" => user.location_id
     }
 
-    Storage.update_user(params, user_id)
+    params
+    |> Storage.update_user(user_id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def delete_user(id) do
@@ -130,10 +157,22 @@ defmodule BookMyGigs.Users do
     location = Locations.get_location_by_city!(location_name)
     user = get_user_by_id!(user_id)
 
-    Storage.update_user_location(user, location.id)
+    user
+    |> Storage.update_user_location(location.id)
+    |> get_user_location()
+    |> to_context_struct()
   end
 
   def to_context_struct(%Storage.User{} = index_db) do
     struct(User, Map.from_struct(index_db))
+  end
+
+  defp get_user_location(user) do
+    Map.update!(user, :location, fn location ->
+      case location do
+        nil -> nil
+        location -> location.city
+      end
+    end)
   end
 end
