@@ -17,6 +17,7 @@ defmodule BookMyGigs.Events.Storage.Event do
   schema "events" do
     field(:date_and_time, :utc_datetime)
     field(:venue, :string)
+    field(:title, :string)
     field(:description, :string)
     field(:address, :string)
     field(:url, :string)
@@ -34,6 +35,7 @@ defmodule BookMyGigs.Events.Storage.Event do
     |> cast(attrs, [
       :date_and_time,
       :venue,
+      :title,
       :description,
       :address,
       :url,
@@ -44,6 +46,7 @@ defmodule BookMyGigs.Events.Storage.Event do
     |> validate_required([
       :date_and_time,
       :venue,
+      :title,
       :address,
       :url,
       :user_id,

@@ -9,6 +9,7 @@ defmodule BookMyGigs.Repo.Migrations.CreateEventsTable do
       add(:type_id, references(:types, type: :uuid, on_delete: :restrict), null: false)
       add(:date_and_time, :utc_datetime)
       add(:venue, :string)
+      add(:title, :string)
       add(:description, :text)
       add(:address, :string)
       add(:url, :string)

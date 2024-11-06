@@ -59,7 +59,7 @@ defmodule BookMyGigsWeb.UsersController do
   operation(:create,
     summary: "Create an user",
     parameters: [
-      account_id: [
+      user_id: [
         in: :path,
         description: "User id",
         schema: %Schema{type: :string, format: :uuid},

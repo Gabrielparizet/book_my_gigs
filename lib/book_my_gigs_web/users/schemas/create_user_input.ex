@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.Users.Schemas.CreateUserInput do
   @moduledoc """
-    Specs describing the response when creating a user.
+    Specs describing the valid input when creating a user.
   """
 
   alias OpenApiSpex.Schema

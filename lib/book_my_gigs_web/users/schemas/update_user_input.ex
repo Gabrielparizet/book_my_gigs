@@ -27,7 +27,7 @@ defmodule BookMyGigsWeb.Users.Schemas.UpdateUserInput do
             type: :string
           }
         },
-        required: [],
+        required: [:username, :first_name, :last_name, :birthday],
         additionalProperties: false
       }
     },
