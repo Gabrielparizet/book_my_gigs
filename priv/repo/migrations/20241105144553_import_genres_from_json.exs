@@ -14,7 +14,6 @@ defmodule BookMyGigs.Repo.Migrations.ImportGenresFromJson do
       VALUES (uuid_generate_v4(), '#{name}', NOW(), NOW())
       ON CONFLICT (name) DO NOTHING
       """
-
       execute(query)
     end)
   end
