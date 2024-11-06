@@ -4,6 +4,7 @@ defmodule BookMyGigs.Users do
   """
 
   alias BookMyGigs.Accounts
+  alias BookMyGigs.Genres
   alias BookMyGigs.Locations
   alias BookMyGigs.Users.Storage
   alias BookMyGigs.Utils
@@ -15,7 +16,16 @@ defmodule BookMyGigs.Users do
 
     @derive Jason.Encoder
 
-    defstruct [:id, :account_id, :username, :first_name, :last_name, :birthday, :location]
+    defstruct [
+      :id,
+      :account_id,
+      :username,
+      :first_name,
+      :last_name,
+      :birthday,
+      :location,
+      :genres
+    ]
 
     @type t :: %__MODULE__{
             id: String.t(),
@@ -24,7 +34,8 @@ defmodule BookMyGigs.Users do
             first_name: String.t(),
             last_name: String.t(),
             birthday: Date.t(),
-            location: String.t() | nil
+            location: String.t() | nil,
+            genres: [String.t()] | nil
           }
   end
 
@@ -40,6 +51,7 @@ defmodule BookMyGigs.Users do
     id
     |> Storage.get_user_by_id!()
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -74,6 +86,7 @@ defmodule BookMyGigs.Users do
     params
     |> Storage.update_user(user_id)
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -92,6 +105,7 @@ defmodule BookMyGigs.Users do
     params
     |> Storage.update_user(user_id)
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -110,6 +124,7 @@ defmodule BookMyGigs.Users do
     params
     |> Storage.update_user(user_id)
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -128,6 +143,7 @@ defmodule BookMyGigs.Users do
     params
     |> Storage.update_user(user_id)
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -146,6 +162,7 @@ defmodule BookMyGigs.Users do
     params
     |> Storage.update_user(user_id)
     |> get_user_location()
+    |> get_user_genres()
     |> to_context_struct()
   end
 
@@ -159,8 +176,21 @@ defmodule BookMyGigs.Users do
 
     user
     |> Storage.update_user_location(location.id)
-    |> get_user_location()
-    |> to_context_struct()
+
+    user_id
+    |> get_user_by_id!()
+  end
+
+  def update_user_genres(user_id, %{"genres" => genres_list}) do
+    genres_ids =
+      genres_list
+      |> Enum.map(&Genres.get_genre_by_name(&1))
+      |> Enum.map(fn genre -> genre.id end)
+
+    Enum.each(genres_ids, &Storage.update_user_genres(user_id, &1))
+
+    user_id
+    |> get_user_by_id!()
   end
 
   def to_context_struct(%Storage.User{} = index_db) do
@@ -172,6 +202,20 @@ defmodule BookMyGigs.Users do
       case location do
         nil -> nil
         location -> location.city
+      end
+    end)
+  end
+
+  defp get_user_genres(user) do
+    Map.update!(user, :genres, fn genres ->
+      case genres do
+        nil ->
+          nil
+
+        genres ->
+          Enum.map(genres, fn genre ->
+            genre.name
+          end)
       end
     end)
   end

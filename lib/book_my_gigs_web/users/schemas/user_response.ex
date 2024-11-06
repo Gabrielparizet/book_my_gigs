@@ -38,6 +38,12 @@ defmodule BookMyGigsWeb.Users.Schemas.UserResponse do
         type: :string,
         format: :uuid,
         nullable: true
+      },
+      genres: %Schema{
+        type: :array,
+        items: %Schema{
+          type: :string
+        }
       }
     },
     example: %{

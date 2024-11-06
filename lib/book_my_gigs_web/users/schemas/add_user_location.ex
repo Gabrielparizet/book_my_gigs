@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.Users.Schemas.AddUserLocation do
   @moduledoc """
-    Specs describing the input when adding locations to a user.
+    Specs describing the input when adding a location to a user.
   """
 
   alias OpenApiSpex.Schema
@@ -8,7 +8,7 @@ defmodule BookMyGigsWeb.Users.Schemas.AddUserLocation do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Add users location",
+    title: "Add user location",
     description: "Valid input to add a location to a user",
     type: :object,
     required: [:location],
