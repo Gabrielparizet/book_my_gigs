@@ -182,6 +182,8 @@ defmodule BookMyGigs.Users do
   end
 
   def update_user_genres(user_id, %{"genres" => genres_list}) do
+    delete_user_genres(user_id)
+
     genres_ids =
       genres_list
       |> Enum.map(&Genres.get_genre_by_name(&1))
@@ -191,6 +193,10 @@ defmodule BookMyGigs.Users do
 
     user_id
     |> get_user_by_id!()
+  end
+
+  def delete_user_genres(user_id) do
+    Storage.delete_user_genres(user_id)
   end
 
   def to_context_struct(%Storage.User{} = index_db) do

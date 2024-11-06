@@ -145,4 +145,8 @@ defmodule BookMyGigs.Users.Storage do
     |> UserGenre.changeset(user_genre_attrs)
     |> Repo.insert()
   end
+
+  def delete_user_genres(user_id) do
+    Repo.delete_all(from ug in UserGenre, where: ug.user_id == ^user_id)
+  end
 end
