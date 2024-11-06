@@ -159,19 +159,49 @@ defmodule BookMyGigsWeb.UsersController do
       ok: {"User Response", "application/json", Schemas.UserResponse},
       bad_request: "Invalid input values"
     ],
-    ok: "User successfully created"
+    ok: "Location successfully updated"
   )
 
   def update_user_location(conn, params) do
     user_id = conn.path_params["id"]
 
-    user_location =
+    user =
       user_id
       |> Users.update_user_location(params)
       |> Jason.encode!()
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, user_location)
+    |> send_resp(200, user)
+  end
+
+  operation(:update_user_genres,
+    summary: "Add genres to a user",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    request_body: {"Add user genres", "application/json", Schemas.AddUserGenres},
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse}
+    ],
+    ok: "Genres successfully updated"
+  )
+
+  def update_user_genres(conn, params) do
+    user_id = conn.path_params["id"]
+
+    user =
+      user_id
+      |> Users.update_user_genres(params)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, user)
   end
 end

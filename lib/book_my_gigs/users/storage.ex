@@ -7,12 +7,14 @@ defmodule BookMyGigs.Users.Storage do
 
   alias BookMyGigs.Accounts.Storage.Account
   alias BookMyGigs.Users.Storage
+  alias BookMyGigs.Users.Storage.UserGenre
   alias BookMyGigs.Utils
   alias BookMyGigs.Repo
 
   def get_users do
     Storage.User
     |> preload(:location)
+    |> preload(:genres)
     |> Repo.all()
   end
 
@@ -20,6 +22,7 @@ defmodule BookMyGigs.Users.Storage do
     Storage.User
     |> Repo.get!(id)
     |> Repo.preload(:location)
+    |> Repo.preload(:genres)
   end
 
   def create_user(user_params, account_id) do
@@ -40,7 +43,9 @@ defmodule BookMyGigs.Users.Storage do
 
         case Repo.insert(changeset) do
           {:ok, user} ->
-            Repo.preload(user, :location)
+            user
+            |> Repo.preload(:location)
+            |> Repo.preload(:genres)
 
           {:error, changeset} ->
             {:error, changeset}
@@ -58,6 +63,7 @@ defmodule BookMyGigs.Users.Storage do
     |> Storage.User.changeset(params)
     |> Repo.update!()
     |> Repo.preload(:location)
+    |> Repo.preload(:genres)
   end
 
   def delete_user(id) do
@@ -126,5 +132,17 @@ defmodule BookMyGigs.Users.Storage do
     |> Storage.User.changeset(params)
     |> Repo.update!()
     |> Repo.preload(:location)
+    |> Repo.preload(:genres)
+  end
+
+  def update_user_genres(user_id, genre_id) do
+    user_genre_attrs = %{
+      user_id: user_id,
+      genre_id: genre_id
+    }
+
+    %UserGenre{}
+    |> UserGenre.changeset(user_genre_attrs)
+    |> Repo.insert()
   end
 end

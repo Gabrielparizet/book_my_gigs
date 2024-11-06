@@ -4,7 +4,7 @@ defmodule BookMyGigs.Repo.Migrations.ImportGenresFromJson do
   def up do
     execute("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
 
-    genres_json = "priv/data/genres/genres_list.json"
+    "priv/data/genres/genres_list.json"
     |> File.read!()
     |> Jason.decode!()
     |> Enum.each(fn %{"id" => _id, "name" => name} ->
