@@ -1,0 +1,323 @@
+[
+    {
+        "type": "concert",
+        "description": "A live music performance by a single artist or band, often held in a dedicated concert venue."
+    },
+    {
+        "type": "festival",
+        "description": "A multi-day event featuring various artists across multiple stages, often themed by genre or season."
+    },
+    {
+        "type": "club",
+        "description": "A music event held in a nightclub or bar, often featuring DJs or smaller live performances."
+    },
+    {
+        "type": "recital",
+        "description": "A small-scale, formal performance, often featuring classical or solo instrumental music."
+    },
+    {
+        "type": "open_air",
+        "description": "An outdoor music event, often held in large open spaces like parks, fields, or stadiums. Open-air events range from small gatherings to massive festivals and provide a relaxed atmosphere with natural surroundings. Weather is a key factor, as these events rely on favorable conditions to enhance the live music experience."
+    },    
+    {
+        "type": "open_mic",
+        "description": "An event where audience members or emerging artists perform in front of an audience, usually in a casual venue."
+    },
+    {
+        "type": "opera",
+        "description": "A classical music performance combining orchestral music, singing, and dramatic staging."
+    },
+    {
+        "type": "orchestra",
+        "description": "A large instrumental ensemble performance, typically playing classical or symphonic pieces."
+    },
+    {
+        "type": "battle_of_the_bands",
+        "description": "A competitive event where bands perform to win based on audience or judge votes."
+    },
+    {
+        "type": "DJ_set",
+        "description": "A performance where a DJ plays and mixes music, often at a club or electronic music event."
+    },
+    {
+        "type": "benefit_concert",
+        "description": "A concert organized to raise funds or awareness for a specific cause or charity."
+    },
+    {
+        "type": "acoustic_show",
+        "description": "A performance focusing on acoustic instruments, often in an intimate or unplugged setting."
+    },
+    {
+        "type": "musical",
+        "description": "A staged theatrical performance combining music, songs, dance, and dialogue."
+    },
+    {
+        "type": "street_performance",
+        "description": "An informal live performance held outdoors, often by individual musicians or small groups."
+    },
+    {
+        "type": "karaoke_night",
+        "description": "An event where participants sing along to backing tracks in front of an audience, often in a bar or club."
+    },
+    {
+        "type": "tribute_show",
+        "description": "A concert dedicated to the music of a specific artist or band, performed by other musicians."
+    },
+    {
+        "type": "album_release_party",
+        "description": "An event celebrating the release of a new album, often featuring a live performance by the artist."
+    },
+    {
+        "type": "jam_session",
+        "description": "An informal gathering of musicians who play and improvise together, often in jazz or blues."
+    },
+    {
+        "type": "sing-along_event",
+        "description": "An event where the audience is encouraged to sing along, often to popular or well-known songs."
+    },
+    {
+        "type": "choir_performance",
+        "description": "A choral music event featuring a group of singers performing harmonized vocal music."
+    },
+    {
+        "type": "rave",
+        "description": "A large, often all-night event featuring electronic music, typically with DJ sets and dance floors."
+    },
+    {
+        "type": "silent_disco",
+        "description": "An event where participants wear wireless headphones to listen to music rather than through speakers."
+    },
+    {
+        "type": "busking",
+        "description": "A street performance, often by solo musicians or small groups, aiming to engage with passersby."
+    },
+    {
+        "type": "house_concert",
+        "description": "An intimate concert held in a private home, featuring close-up performances by the artist."
+    },
+    {
+        "type": "talent_show",
+        "description": "An event where individuals perform in various musical or other artistic categories, often with judges or voting."
+    },
+    {
+        "type": "flash_mob",
+        "description": "A sudden, usually unannounced performance in a public space, often organized for surprise impact."
+    },
+    {
+        "type": "interactive_performance",
+        "description": "A performance where the audience is encouraged to interact with the music, such as through clapping or singing."
+    },
+    {
+        "type": "workshop",
+        "description": "An event focused on teaching or learning specific musical skills, often hands-on and interactive."
+    },
+    {
+        "type": "sound_installation",
+        "description": "An immersive event using sound as an artistic medium, often in an exhibit or gallery setting."
+    },
+    {
+        "type": "improv_show",
+        "description": "A live event where musicians improvise without a fixed setlist, often drawing from audience suggestions."
+    },
+    {
+        "type": "dinner_show",
+        "description": "A music event held in a restaurant or dining setting, with music provided alongside meal service."
+    },
+    {
+        "type": "medley_show",
+        "description": "A performance where multiple shorter songs are performed in sequence, often by a single artist or group."
+    },
+    {
+        "type": "listening_party",
+        "description": "A casual gathering to listen to a specific album or artist, often in anticipation of a new release."
+    },
+    {
+        "type": "composer_showcase",
+        "description": "An event focusing on a particular composer’s work, with various pieces performed by different musicians."
+    },
+    {
+        "type": "vocal_battle",
+        "description": "A competition where vocalists perform against each other, with audience or judge voting."
+    },
+    {
+        "type": "ensemble_performance",
+        "description": "A small group performance, such as a quartet or quintet, focused on coordinated instrumental or vocal music."
+    },
+    {
+        "type": "rehearsal_show",
+        "description": "A semi-public rehearsal where musicians practice in front of an invited audience for feedback."
+    },
+    {
+        "type": "masterclass",
+        "description": "An instructional event where experienced musicians teach and demonstrate to students or audience members."
+    },
+    {
+        "type": "audition",
+        "description": "A public or semi-public performance where musicians perform for judges or potential roles in productions."
+    },
+    {
+        "type": "anniversary_show",
+        "description": "A concert celebrating a milestone, such as a band's formation, or an album release anniversary."
+    },
+    {
+        "type": "light_show",
+        "description": "A music event accompanied by intricate light displays or projections, enhancing the visual experience."
+    },
+    {
+        "type": "installation_exhibit",
+        "description": "A gallery or museum exhibit with interactive musical elements, where sound plays a central role."
+    },
+    {
+        "type": "sound_bath",
+        "description": "An immersive event using sound waves and vibrations, often with instruments like gongs and singing bowls, aimed at relaxation and meditation."
+    },
+    {
+        "type": "ambient_experience",
+        "description": "A music event where ambient music plays continuously, often with visuals or lighting to create a relaxing atmosphere."
+    },
+    {
+        "type": "artist_residency",
+        "description": "A series of performances by a single artist or group over multiple nights, often in the same venue."
+    },
+    {
+        "type": "songwriters_round",
+        "description": "An intimate event where multiple songwriters perform their songs in turn, often with storytelling about the song's creation."
+    },
+    {
+        "type": "immersive_audio_experience",
+        "description": "An event using surround sound or binaural audio technology to create an immersive listening environment."
+    },
+    {
+        "type": "soundwalk",
+        "description": "An organized walk where participants listen to the sounds of the environment, sometimes with live or recorded soundscapes."
+    },
+    {
+        "type": "listening_booth",
+        "description": "An installation or small booth where attendees can privately listen to curated music or sound art pieces."
+    },
+    {
+        "type": "concept_album_show",
+        "description": "A live performance of an album with a specific narrative or theme, often performed in sequence as a cohesive story."
+    },
+    {
+        "type": "candlelight_concert",
+        "description": "A live music performance in a dimly lit venue filled with candles, creating an intimate and atmospheric setting."
+    },
+    {
+        "type": "residency_series",
+        "description": "A set of recurring performances by different artists, often in the same genre or style, hosted by a single venue over time."
+    },
+    {
+        "type": "interactive_jukebox",
+        "description": "A live event where audience members request songs in real time, with performers adapting to the selections."
+    },
+    {
+        "type": "projection_mapping_show",
+        "description": "A live music event combined with projection mapping visuals that enhance the performance space or stage."
+    },
+    {
+        "type": "pop-up_performance",
+        "description": "A spontaneous, unannounced live music performance in a public or unexpected location."
+    },
+    {
+        "type": "hybrid_virtual_concert",
+        "description": "A concert that combines a live, in-person audience with a simultaneous online streaming audience."
+    },
+    {
+        "type": "live_composition_event",
+        "description": "An event where composers or musicians create new music live in front of an audience, sometimes incorporating audience input."
+    },
+    {
+        "type": "music_slam",
+        "description": "An event where performers quickly present short, original compositions in front of a live audience, similar to poetry slams."
+    },
+    {
+        "type": "acapella_showcase",
+        "description": "A performance focused on vocal-only arrangements, showcasing acapella groups or solo vocalists."
+    },
+    {
+        "type": "noise_show",
+        "description": "An avant-garde event featuring experimental noise music, often focusing on unconventional sounds and feedback."
+    },
+    {
+        "type": "relaxation_concert",
+        "description": "A performance designed for relaxation and wellness, often with slow-paced music and a peaceful atmosphere."
+    },
+    {
+        "type": "interactive_dance_party",
+        "description": "A dance event where the DJ or musicians interact directly with the crowd, taking requests or guiding group activities."
+    },
+    {
+        "type": "shadow_cast",
+        "description": "An event where live performers act out a concert or music video in sync with a recorded track, often adding a theatrical element."
+    },
+    {
+        "type": "backyard_gig",
+        "description": "An informal music event held in a backyard, often with a smaller audience and an intimate setting."
+    },
+    {
+        "type": "storytelling_song_circle",
+        "description": "A circular gathering where musicians share songs and stories in turns, usually acoustically and in an intimate setting."
+    },
+    {
+        "type": "midnight_show",
+        "description": "A music event that begins late at night, often intended to create a unique or surreal atmosphere."
+    },
+    {
+        "type": "sonic_installation",
+        "description": "An installation that uses sounds in a space, allowing attendees to walk around and interact with different soundscapes."
+    },
+    {
+        "type": "rooftop_concert",
+        "description": "A live performance held on a rooftop, offering unique views and an outdoor atmosphere."
+    },
+    {
+        "type": "charity_music_auction",
+        "description": "An event combining live music with a charity auction, where items or experiences are auctioned for fundraising."
+    },
+    {
+        "type": "loop_station_show",
+        "description": "A performance centered around loop stations, with artists building layered sounds live in front of the audience."
+    },
+    {
+        "type": "vinyl_listening_session",
+        "description": "A casual event where participants listen to vinyl records, often curated around a theme or artist."
+    },
+    {
+        "type": "musical_flashback_event",
+        "description": "A performance recreating a specific era’s music, often with period costumes and decor to set the atmosphere."
+    },
+    {
+        "type": "light_and_sound_experience",
+        "description": "An event combining music and synchronized lighting effects, often for a dramatic and immersive experience."
+    },
+    {
+        "type": "intimate_lounge_session",
+        "description": "A cozy, informal music session often held in a lounge or living room setting with a small audience."
+    },
+    {
+        "type": "instrument_petting_zoo",
+        "description": "An educational event where attendees, especially kids, can try out different musical instruments with guidance."
+    },
+    {
+        "type": "interactive_songwriting_session",
+        "description": "A collaborative event where participants contribute to writing and composing a song in real time."
+    },
+    {
+        "type": "dusk_concert",
+        "description": "An outdoor concert timed with the setting sun, often aiming to capture the natural ambiance of dusk."
+    },
+    {
+        "type": "soundscape_experience",
+        "description": "An immersive event featuring ambient soundscapes, often inspired by nature or specific themes."
+    },
+    {
+        "type": "multisensory_show",
+        "description": "A performance combining music with other sensory elements like scents, lighting, or temperature changes."
+    },
+    {
+        "type": "micro_concert",
+        "description": "A short, often 15-20 minute live music performance in a very small, intimate setting."
+    }
+]
+    
