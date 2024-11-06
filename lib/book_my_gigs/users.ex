@@ -197,6 +197,7 @@ defmodule BookMyGigs.Users do
 
   def delete_user_genres(user_id) do
     Storage.delete_user_genres(user_id)
+    get_user_by_id!(user_id)
   end
 
   def to_context_struct(%Storage.User{} = index_db) do

@@ -187,7 +187,8 @@ defmodule BookMyGigsWeb.UsersController do
     ],
     request_body: {"Add user genres", "application/json", Schemas.AddUserGenres},
     responses: [
-      ok: {"User response", "application/json", Schemas.UserResponse}
+      ok: {"User response", "application/json", Schemas.UserResponse},
+      bad_request: "Invalid input values"
     ],
     ok: "Genres successfully updated"
   )
@@ -198,6 +199,35 @@ defmodule BookMyGigsWeb.UsersController do
     user =
       user_id
       |> Users.update_user_genres(params)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, user)
+  end
+
+  operation(:delete_user_genres,
+    summary: "Delete user genres",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse}
+    ],
+    ok: "User genres successfully deleted"
+  )
+
+  def delete_user_genres(conn, _params) do
+    user_id = conn.path_params["id"]
+
+    user =
+      user_id
+      |> Users.delete_user_genres()
       |> Jason.encode!()
 
     conn
