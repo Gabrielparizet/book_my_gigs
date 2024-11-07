@@ -70,6 +70,15 @@ defmodule BookMyGigs.Events.Storage do
     |> Repo.preload([:location, :type, :genres, :user])
   end
 
+  def get_events_by_location(location_name) do
+    location_id = get_location_id(location_name)
+
+    Event
+    |> where(location_id: ^location_id)
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
+  end
+
   defp get_location_id(location_name) do
     location_name
     |> Locations.get_location_by_city!()

@@ -73,6 +73,12 @@ defmodule BookMyGigs.Events do
     |> to_context_struct()
   end
 
+  def get_events_by_location(location_name) do
+    location_name
+    |> Storage.get_events_by_location()
+    |> Enum.map(&to_context_struct/1)
+  end
+
   def remove_user_from_event(event) do
     %{event | user: nil, user_id: nil}
   end
