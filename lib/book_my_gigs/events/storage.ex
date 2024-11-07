@@ -108,7 +108,10 @@ defmodule BookMyGigs.Events.Storage do
 
     Event
     |> join(:inner, [e], eg in EventGenre, on: e.id == eg.event_id)
-    |> where([e, eg], e.location_id == ^location_id and e.type_id == ^type_id and eg.genre_id in ^genre_ids)
+    |> where(
+      [e, eg],
+      e.location_id == ^location_id and e.type_id == ^type_id and eg.genre_id in ^genre_ids
+    )
     |> distinct([e], e.id)
     |> Repo.all()
     |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
