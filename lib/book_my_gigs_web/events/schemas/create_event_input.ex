@@ -40,7 +40,8 @@ defmodule BookMyGigsWeb.Events.Schemas.CreateEventInput do
             type: :string
           },
           url: %Schema{
-            type: :string
+            type: :string,
+            format: :uri
           },
           location: %Schema{
             type: :string

@@ -9,7 +9,7 @@ defmodule BookMyGigsWeb.EventsController do
   alias BookMyGigsWeb.Events.Schemas
   alias OpenApiSpex.Schema
 
-  operation(:get,
+  operation(:get_public_events,
     summary: "Get all events",
     responses: [
       ok: {"Public Events Response", "application/json", Schemas.PublicEventsResponse}
@@ -17,14 +17,45 @@ defmodule BookMyGigsWeb.EventsController do
     ok: "Events successfully found"
   )
 
-  def get(conn, _params) do
+  def get_public_events(conn, _params) do
     events =
       Events.get_events()
+      |> Enum.map(&Events.remove_user_from_event/1)
       |> Jason.encode!()
 
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, events)
+  end
+
+  operation(:get_public_event_by_id,
+    summary: "Get public event by id",
+    parameters: [
+      event_id: [
+        in: :path,
+        description: "Event id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"Public_Event_response", "application/json", Schemas.PublicEventResponse}
+    ],
+    ok: "Event successfully found"
+  )
+
+  def get_public_event_by_id(conn, _params) do
+    event_id = conn.params["id"]
+
+    event =
+      event_id
+      |> Events.get_event_by_id()
+      |> Events.remove_user_from_event()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
   end
 
   operation(:create,

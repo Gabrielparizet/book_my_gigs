@@ -42,7 +42,8 @@ defmodule BookMyGigsWeb.Router do
     post "/accounts/sign_in", AccountsController, :sign_in
 
     # EVENTS PUBLIC ROUTES
-    get "/events", EventsController, :get
+    get "/events", EventsController, :get_public_events
+    get "/events/:id", EventsController, :get_public_event_by_id
   end
 
   scope "/api", BookMyGigsWeb do

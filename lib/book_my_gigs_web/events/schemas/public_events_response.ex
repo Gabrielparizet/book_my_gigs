@@ -18,6 +18,12 @@ defmodule BookMyGigsWeb.Events.Schemas.PublicEventsResponse do
           type: :string,
           format: :uuid
         },
+        user: %Schema{
+          type: :null
+        },
+        user_id: %Schema{
+          type: :null
+        },
         title: %Schema{
           type: :string
         },
@@ -34,7 +40,8 @@ defmodule BookMyGigsWeb.Events.Schemas.PublicEventsResponse do
           type: :string
         },
         url: %Schema{
-          type: :string
+          type: :string,
+          format: :uri
         },
         genres: %Schema{
           type: :array,
@@ -54,6 +61,8 @@ defmodule BookMyGigsWeb.Events.Schemas.PublicEventsResponse do
     example: [
       %{
         "id" => "bd4ef420-1e29-4e93-9161-ab4aa7fd7653",
+        "user" => nil,
+        "user_id" => nil,
         "type" => "Concert",
         "address" => "7 Port de la Gare, 75013 Paris",
         "description" =>
@@ -70,6 +79,8 @@ defmodule BookMyGigsWeb.Events.Schemas.PublicEventsResponse do
       },
       %{
         "id" => "bd4ef420-1e29-4e93-9161-ab4aa7fd7654",
+        "user" => nil,
+        "user_id" => nil,
         "type" => "Club",
         "address" => "3bis Rue Papin, 75003 Paris",
         "description" =>

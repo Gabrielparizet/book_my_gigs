@@ -41,7 +41,8 @@ defmodule BookMyGigsWeb.Events.Schemas.EventsResponse do
           type: :string
         },
         url: %Schema{
-          type: :string
+          type: :string,
+          format: :uri
         },
         genres: %Schema{
           type: :array,
