@@ -202,4 +202,39 @@ defmodule BookMyGigsWeb.EventsController do
     |> put_resp_content_type("application/json")
     |> send_resp(200, events)
   end
+
+  operation(:update_event,
+    summary: "Update an event",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ],
+      event_id: [
+        in: :path,
+        description: "Event id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c27"
+      ]
+    ],
+    request_body: {"Update event input", "application/json", Schemas.UpdateEventInput},
+    responses: [
+      ok: {"Event response", "application/json", Schemas.EventResponse},
+      bad_request: "Invalid input values"
+    ],
+    ok: "Event successfully updated"
+  )
+
+  def update_event(conn, params) do
+    event =
+      params
+      |> Events.update_event()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
+  end
 end

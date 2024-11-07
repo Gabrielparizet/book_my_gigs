@@ -117,6 +117,36 @@ defmodule BookMyGigs.Events.Storage do
     |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
   end
 
+  def update_event(event_id, user_id, params) do
+    event =
+      Event
+      |> Repo.get_by(%{id: event_id, user_id: user_id})
+      |> Repo.preload([:location, :type, :genres, :user])
+
+    changeset_params = parse_update_params(params)
+
+    updated_event =
+      event
+      |> Ecto.Changeset.change(changeset_params)
+      |> Repo.update!()
+
+    if genres = Map.get(params, "genres") do
+      # Delete existing associations
+      Repo.delete_all(from(eg in EventGenre, where: eg.event_id == ^event_id))
+
+      # Create new ones
+      Enum.each(genres, fn genre_name ->
+        %EventGenre{
+          event_id: event_id,
+          genre_id: get_genre_id(genre_name)
+        }
+        |> Repo.insert!()
+      end)
+    end
+
+    updated_event |> Repo.preload([:location, :type, :genres, :user])
+  end
+
   defp get_location_id(location_name) do
     location_name
     |> Locations.get_location_by_city!()
@@ -131,5 +161,33 @@ defmodule BookMyGigs.Events.Storage do
   defp get_genre_id(genre_name) do
     Genres.get_genre_by_name(genre_name)
     |> Map.get(:id)
+  end
+
+  defp parse_update_params(params) do
+    %{
+      address: Map.get(params, "address", nil),
+      date_and_time: Map.get(params, "date_and_time", nil) |> update_event_date_and_time(),
+      venue: Map.get(params, "venue", nil),
+      location_id: if(loc = Map.get(params, "location"), do: get_location_id(loc)),
+      title: Map.get(params, "title", nil),
+      description: Map.get(params, "description", nil),
+      url: Map.get(params, "url", nil),
+      type_id: if(type = Map.get(params, "type"), do: get_type_id(type))
+    }
+    |> Enum.filter(fn {_key, val} -> not is_nil(val) end)
+  end
+
+  defp update_event_date_and_time(date_and_time) do
+    case date_and_time do
+      nil -> nil
+      date_and_time -> Utils.DateUtils.parse_date_and_time(date_and_time)
+    end
+  end
+
+  def update_event_genres(genres) do
+    case genres do
+      nil -> nil
+      genres -> Enum.map(genres, &get_genre_id(&1))
+    end
   end
 end

@@ -14,6 +14,6 @@ defmodule BookMyGigs.Utils.DateUtils do
 
     [hour, minute] = String.split(date_time_values["time"], ":")
 
-    NaiveDateTime.new!(date, Time.new!(String.to_integer(hour), String.to_integer(minute), 00))
+    DateTime.new!(date, Time.new!(String.to_integer(hour), String.to_integer(minute), 00))
   end
 end
