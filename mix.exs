@@ -69,7 +69,8 @@ defmodule BookMyGigs.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:bcrypt_elixir, "~> 3.1.0"},
       {:cors_plug, "~> 3.0"},
-      {:nimble_csv, "~> 1.2"}
+      {:nimble_csv, "~> 1.2"},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 
