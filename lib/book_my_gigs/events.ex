@@ -45,10 +45,12 @@ defmodule BookMyGigs.Events do
           }
   end
 
+
   def get_events() do
     Storage.get_events()
     |> Enum.map(&to_context_struct(&1))
   end
+
 
   def get_event_by_id(event_id) do
     event_id
@@ -56,10 +58,12 @@ defmodule BookMyGigs.Events do
     |> to_context_struct()
   end
 
+
   def create_event(%{"event" => event_params}, user_id) do
     {:ok, event} = Storage.create_event(event_params, user_id)
     to_context_struct(event)
   end
+
 
   def get_events_by_user(user_id) do
     user_id
@@ -67,15 +71,26 @@ defmodule BookMyGigs.Events do
     |> Enum.map(&to_context_struct(&1))
   end
 
+
   def get_user_event_by_id(event_id, user_id) do
     event_id
     |> Storage.get_user_event_by_id(user_id)
     |> to_context_struct()
   end
 
+
+  def get_events_by_location(location_name) do
+    location_name
+    |> Storage.get_events_by_location()
+    |> Enum.map(&to_context_struct/1)
+  end
+
+
   def remove_user_from_event(event) do
     %{event | user: nil, user_id: nil}
   end
+
+
 
   defp to_context_struct(%Storage.Event{} = index_db) do
     storage_struct =
@@ -88,6 +103,7 @@ defmodule BookMyGigs.Events do
     struct(Event, Map.from_struct(storage_struct))
   end
 
+
   defp get_username(event) do
     Map.update!(event, :user, fn user ->
       case user do
@@ -96,6 +112,7 @@ defmodule BookMyGigs.Events do
       end
     end)
   end
+
 
   defp get_location(event) do
     Map.update!(event, :location, fn location ->
