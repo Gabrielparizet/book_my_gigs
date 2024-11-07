@@ -13,6 +13,12 @@ defmodule BookMyGigs.Events.Storage do
   alias BookMyGigs.Types
   alias BookMyGigs.Utils
 
+  def get_events() do
+    Event
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
+  end
+
   def create_event(event_params, user_id) do
     params = %{
       user_id: user_id,

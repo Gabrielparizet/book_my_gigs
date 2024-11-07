@@ -34,9 +34,15 @@ defmodule BookMyGigsWeb.Router do
 
   scope "/", BookMyGigsWeb do
     pipe_through [:api]
+
+    # CREATE ACCOUNT
     post "/accounts", AccountsController, :create
 
+    # SIGN IN TO SESSION
     post "/accounts/sign_in", AccountsController, :sign_in
+
+    # EVENTS PUBLIC ROUTES
+    get "/events", EventsController, :get
   end
 
   scope "/api", BookMyGigsWeb do

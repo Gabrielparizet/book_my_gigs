@@ -45,6 +45,14 @@ defmodule BookMyGigs.Events do
           }
   end
 
+  def get_events() do
+    Storage.get_events()
+    |> Enum.map(&to_context_struct(&1))
+    |> Enum.map(fn event ->
+      %{event | user: nil, user_id: nil}
+    end)
+  end
+
   def create_event(%{"event" => event_params}, user_id) do
     {:ok, event} = Storage.create_event(event_params, user_id)
     to_context_struct(event)

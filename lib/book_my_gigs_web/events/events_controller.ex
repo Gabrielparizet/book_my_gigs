@@ -9,6 +9,24 @@ defmodule BookMyGigsWeb.EventsController do
   alias BookMyGigsWeb.Events.Schemas
   alias OpenApiSpex.Schema
 
+  operation(:get,
+    summary: "Get all events",
+    responses: [
+      ok: {"Public Events Response", "application/json", Schemas.PublicEventsResponse}
+    ],
+    ok: "Events successfully found"
+  )
+
+  def get(conn, _params) do
+    events =
+      Events.get_events()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, events)
+  end
+
   operation(:create,
     summary: "Create an event",
     parameters: [
@@ -53,7 +71,7 @@ defmodule BookMyGigsWeb.EventsController do
     responses: [
       ok: {"Events Response", "application/json", Schemas.EventsResponse}
     ],
-    ok: "Users's event successfully found"
+    ok: "Users's events successfully found"
   )
 
   def get_events_by_user(conn, _params) do
