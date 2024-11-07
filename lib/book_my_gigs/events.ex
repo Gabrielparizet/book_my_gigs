@@ -98,6 +98,20 @@ defmodule BookMyGigs.Events do
     |> Enum.map(&to_context_struct/1)
   end
 
+  def update_event(params) do
+    event_id = params["event_id"]
+    user_id = params["user_id"]
+
+    event_params =
+      params["event"]
+      |> Map.delete("user_id")
+      |> Map.delete("event_id")
+
+    event_id
+    |> Storage.update_event(user_id, event_params)
+    |> to_context_struct()
+  end
+
   def remove_user_from_event(event) do
     %{event | user: nil, user_id: nil}
   end
