@@ -100,7 +100,7 @@ defmodule BookMyGigsWeb.EventsController do
       ]
     ],
     responses: [
-      ok: {"Events Response", "application/json", Schemas.EventsResponse}
+      ok: {"Events response", "application/json", Schemas.EventsResponse}
     ],
     ok: "Users's events successfully found"
   )
@@ -111,6 +111,42 @@ defmodule BookMyGigsWeb.EventsController do
     event =
       user_id
       |> Events.get_events_by_user()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
+  end
+
+  operation(:get_user_event_by_id,
+    summary: "Get a user and an event with their ids",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ],
+      event_id: [
+        in: :path,
+        description: "Event id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c27"
+      ]
+    ],
+    responses: [
+      ok: {"Event response", "application/json", Schemas.EventResponse}
+    ],
+    ok: "Event successfully found"
+  )
+
+  def get_user_event_by_id(conn, _params) do
+    event_id = conn.params["event_id"]
+    user_id = conn.params["user_id"]
+
+    event =
+      event_id
+      |> Events.get_user_event_by_id(user_id)
       |> Jason.encode!()
 
     conn
