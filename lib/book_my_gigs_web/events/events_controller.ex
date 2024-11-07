@@ -154,32 +154,80 @@ defmodule BookMyGigsWeb.EventsController do
     |> send_resp(200, event)
   end
 
+  # operation(:get_events_by_location,
+  #   summary: "Get all events for a location",
+  #   parameters: [
+  #     location_name: [
+  #       in: :path,
+  #       description: "Location name",
+  #       example: "Paris"
+  #     ]
+  #   ],
+  #   responses: [
+  #     ok: {"Events response", "application/json", Schemas.EventsResponse}
+  #   ],
+  #   ok: "Event successfully found"
+  # )
+
+  # def get_events_by_location(conn, _params) do
+  #   location_name = conn.params["name"]
+
+  #   event =
+  #     location_name
+  #     |> Events.get_events_by_location()
+  #     |> Jason.encode!()
+
+  #   conn
+  #   |> put_resp_content_type("application/json")
+  #   |> send_resp(200, event)
+  # end
+
   operation(:get_events_by_location,
-    summary: "Get all events for a location",
+    summary: "Get events by location and/ or filters",
     parameters: [
-      location_id: [
+      location_name: [
         in: :path,
-        description: "Location id",
-        schema: %Schema{type: :string, format: :uuid},
-        example: "61492a85-3946-4b62-8887-2952af807c26"
+        description: "Location name",
+        example: "Paris"
+      ],
+      genres: [
+        in: :query,
+        description: "Genre names",
+        required: false,
+        schema: %Schema{
+          type: :array,
+          items: %Schema{type: :string},
+          example: ["Rock", "Techno", "Jazz"]
+        }
+      ],
+      type: [
+        in: :query,
+        description: "type name",
+        required: false,
+        schema: %Schema{
+          type: :string,
+          example: "Club"
+        }
       ]
     ],
     responses: [
       ok: {"Events response", "application/json", Schemas.EventsResponse}
     ],
-    ok: "Event successfully found"
+    ok: "Events successfully found"
   )
 
-  def get_events_by_location(conn, _params) do
-    location_name = conn.params["id"]
+  def get_events_by_location(conn, params) do
+    location_name = conn.params["name"]
+    genre_names = Map.get(params, "genres", [])
+    type_name = Map.get(params, "type", nil)
 
-    event =
+    events =
       location_name
-      |> Events.get_events_by_location()
+      |> Events.get_events_by_location(genre_names, type_name)
       |> Jason.encode!()
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, event)
+    |> send_resp(200, events)
   end
 end
