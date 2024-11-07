@@ -14,6 +14,7 @@ defmodule BookMyGigs.Genres do
 
     defstruct [:id, :name]
 
+    @type id :: String.t()
     @type t :: %__MODULE__{
             id: String.t(),
             name: String.t()

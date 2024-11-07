@@ -3,6 +3,7 @@ defmodule BookMyGigs.Repo.Migrations.ImportTypesFromJson do
 
   def up do
     execute("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
+
     "priv/data/types/types_list.json"
     |> File.read!()
     |> Jason.decode!()
@@ -13,6 +14,7 @@ defmodule BookMyGigs.Repo.Migrations.ImportTypesFromJson do
       VALUES (uuid_generate_v4(), '#{parse_type(type)}', NOW(), NOW())
       ON CONFLICT (name) DO NOTHING
       """
+
       execute(query)
     end)
   end

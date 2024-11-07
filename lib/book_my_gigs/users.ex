@@ -27,6 +27,7 @@ defmodule BookMyGigs.Users do
       :genres
     ]
 
+    @type id :: String.t()
     @type t :: %__MODULE__{
             id: String.t(),
             account_id: Accounts.Account.id(),
@@ -50,6 +51,14 @@ defmodule BookMyGigs.Users do
   def get_user_by_id!(id) do
     id
     |> Storage.get_user_by_id!()
+    |> get_user_location()
+    |> get_user_genres()
+    |> to_context_struct()
+  end
+
+  def get_user_by_username(username) do
+    username
+    |> Storage.get_user_by_username()
     |> get_user_location()
     |> get_user_genres()
     |> to_context_struct()

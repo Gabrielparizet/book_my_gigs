@@ -25,6 +25,12 @@ defmodule BookMyGigs.Users.Storage do
     |> Repo.preload(:genres)
   end
 
+  def get_user_by_username(username) do
+    Repo.get_by(Storage.User, username: username)
+    |> Repo.preload(:location)
+    |> Repo.preload(:genres)
+  end
+
   def create_user(user_params, account_id) do
     params = %{
       account_id: account_id,
