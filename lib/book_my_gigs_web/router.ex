@@ -62,6 +62,8 @@ defmodule BookMyGigsWeb.Router do
     put "/users/:id/genres", UsersController, :update_user_genres
     delete "/users/:id/genres", UsersController, :delete_user_genres
 
+    # USERS EVENTS ROUTES
+    get "/users/:id/events", EventsController, :get_events_by_user
     post "/users/:id/events", EventsController, :create
   end
 

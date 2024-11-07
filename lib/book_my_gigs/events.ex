@@ -61,6 +61,12 @@ defmodule BookMyGigs.Events do
     struct(Event, Map.from_struct(storage_struct))
   end
 
+  def get_events_by_user(user_id) do
+    user_id
+    |> Storage.get_events_by_user()
+    |> Enum.map(&to_context_struct(&1))
+  end
+
   defp get_username(event) do
     Map.update!(event, :user, fn user ->
       case user do
