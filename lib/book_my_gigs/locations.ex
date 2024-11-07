@@ -14,6 +14,7 @@ defmodule BookMyGigs.Locations do
 
     defstruct [:id, :city, :region, :country, :country_code]
 
+    @type id :: String.t()
     @type t :: %__MODULE__{
             id: String.t(),
             region: String.t(),

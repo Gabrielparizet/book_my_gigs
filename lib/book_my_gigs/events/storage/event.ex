@@ -25,7 +25,7 @@ defmodule BookMyGigs.Events.Storage.Event do
     belongs_to(:user, User, type: Ecto.UUID)
     belongs_to(:location, Location, type: Ecto.UUID)
     belongs_to(:type, Type, type: Ecto.UUID)
-    many_to_many(:genres, Genre, join_through: EventGenre)
+    many_to_many(:genres, Genre, join_through: EventGenre, on_delete: :delete_all)
 
     timestamps(type: :utc_datetime)
   end

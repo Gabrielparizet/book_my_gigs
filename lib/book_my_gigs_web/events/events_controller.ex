@@ -27,7 +27,16 @@ defmodule BookMyGigsWeb.EventsController do
     ok: "Event successfully created"
   )
 
-  def create(conn, _params) do
+  def create(conn, params) do
+    user_id = conn.params["id"]
+
+    event =
+      params
+      |> Events.create_event(user_id)
+      |> Jason.encode!()
+
     conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
   end
 end
