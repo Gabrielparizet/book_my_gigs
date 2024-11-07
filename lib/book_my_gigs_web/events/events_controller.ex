@@ -154,34 +154,6 @@ defmodule BookMyGigsWeb.EventsController do
     |> send_resp(200, event)
   end
 
-  # operation(:get_events_by_location,
-  #   summary: "Get all events for a location",
-  #   parameters: [
-  #     location_name: [
-  #       in: :path,
-  #       description: "Location name",
-  #       example: "Paris"
-  #     ]
-  #   ],
-  #   responses: [
-  #     ok: {"Events response", "application/json", Schemas.EventsResponse}
-  #   ],
-  #   ok: "Event successfully found"
-  # )
-
-  # def get_events_by_location(conn, _params) do
-  #   location_name = conn.params["name"]
-
-  #   event =
-  #     location_name
-  #     |> Events.get_events_by_location()
-  #     |> Jason.encode!()
-
-  #   conn
-  #   |> put_resp_content_type("application/json")
-  #   |> send_resp(200, event)
-  # end
-
   operation(:get_events_by_location,
     summary: "Get events by location and/ or filters",
     parameters: [
