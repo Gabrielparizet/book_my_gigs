@@ -73,9 +73,15 @@ defmodule BookMyGigs.Events do
     |> to_context_struct()
   end
 
-  def get_events_by_location(location_name) do
+  def get_events_by_location(location_name, [], nil) do
     location_name
     |> Storage.get_events_by_location()
+    |> Enum.map(&to_context_struct/1)
+  end
+
+  def get_events_by_location(location_name, genre_names, nil) when is_list(genre_names) do
+    location_name
+    |> Storage.get_events_by_location_and_genres(genre_names)
     |> Enum.map(&to_context_struct/1)
   end
 

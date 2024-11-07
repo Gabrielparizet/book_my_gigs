@@ -75,7 +75,8 @@ defmodule BookMyGigsWeb.Router do
     post "/users/:id/events", EventsController, :create
 
     # EVENTS ROUTES
-    get "/events/location/:id", EventsController, :get_events_by_location
+    get "/events/location/:name", EventsController, :get_events_by_location
+    # get "/events/location/:name/filters", EventsController, :get_events_by
   end
 
   # Other scopes may use custom stacks.

@@ -79,6 +79,13 @@ defmodule BookMyGigs.Events.Storage do
     |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
   end
 
+  def get_events_by_location_and_genres(location_name, genre_names) do
+    location_id = get_location_id(location_name)
+    genre_ids = Enum.map(genre_names, &get_genre_id/1)
+
+    IO.inspect({location_id, genre_ids}, label: "THERE")
+  end
+
   defp get_location_id(location_name) do
     location_name
     |> Locations.get_location_by_city!()
