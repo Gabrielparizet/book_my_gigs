@@ -83,7 +83,35 @@ defmodule BookMyGigs.Events.Storage do
     location_id = get_location_id(location_name)
     genre_ids = Enum.map(genre_names, &get_genre_id/1)
 
-    IO.inspect({location_id, genre_ids}, label: "THERE")
+    Event
+    |> join(:inner, [e], eg in EventGenre, on: e.id == eg.event_id)
+    |> where([e, eg], e.location_id == ^location_id and eg.genre_id in ^genre_ids)
+    |> distinct([e], e.id)
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
+  end
+
+  def get_events_by_location_and_type(location_name, type_name) do
+    location_id = get_location_id(location_name)
+    type_id = get_type_id(type_name)
+
+    Event
+    |> where([e], location_id: ^location_id, type_id: ^type_id)
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
+  end
+
+  def get_events_by_location_genres_and_type(location_name, genre_names, type_name) do
+    location_id = get_location_id(location_name)
+    genre_ids = Enum.map(genre_names, &get_genre_id/1)
+    type_id = get_type_id(type_name)
+
+    Event
+    |> join(:inner, [e], eg in EventGenre, on: e.id == eg.event_id)
+    |> where([e, eg], e.location_id == ^location_id and e.type_id == ^type_id and eg.genre_id in ^genre_ids)
+    |> distinct([e], e.id)
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
   end
 
   defp get_location_id(location_name) do
