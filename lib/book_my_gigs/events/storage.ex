@@ -3,6 +3,8 @@ defmodule BookMyGigs.Events.Storage do
   Module providing functionalities to interact with the events table and its join tables.
   """
 
+  import Ecto.Query
+
   alias BookMyGigs.Events.Storage.Event
   alias BookMyGigs.Events.Storage.EventGenre
   alias BookMyGigs.Genres
@@ -10,6 +12,18 @@ defmodule BookMyGigs.Events.Storage do
   alias BookMyGigs.Repo
   alias BookMyGigs.Types
   alias BookMyGigs.Utils
+
+  def get_events() do
+    Event
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
+  end
+
+  def get_event_by_id(id) do
+    Event
+    |> Repo.get_by(%{id: id})
+    |> Repo.preload([:location, :type, :genres, :user])
+  end
 
   def create_event(event_params, user_id) do
     params = %{
@@ -41,6 +55,13 @@ defmodule BookMyGigs.Events.Storage do
       {:error, changeset} ->
         {:error, changeset}
     end
+  end
+
+  def get_events_by_user(user_id) do
+    Event
+    |> where(user_id: ^user_id)
+    |> Repo.all()
+    |> Enum.map(&Repo.preload(&1, [:location, :type, :genres, :user]))
   end
 
   defp get_location_id(location_name) do

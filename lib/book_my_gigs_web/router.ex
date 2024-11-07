@@ -34,9 +34,16 @@ defmodule BookMyGigsWeb.Router do
 
   scope "/", BookMyGigsWeb do
     pipe_through [:api]
+
+    # CREATE ACCOUNT
     post "/accounts", AccountsController, :create
 
+    # SIGN IN TO SESSION
     post "/accounts/sign_in", AccountsController, :sign_in
+
+    # EVENTS PUBLIC ROUTES
+    get "/events", EventsController, :get_public_events
+    get "/events/:id", EventsController, :get_public_event_by_id
   end
 
   scope "/api", BookMyGigsWeb do
@@ -62,6 +69,8 @@ defmodule BookMyGigsWeb.Router do
     put "/users/:id/genres", UsersController, :update_user_genres
     delete "/users/:id/genres", UsersController, :delete_user_genres
 
+    # USERS EVENTS ROUTES
+    get "/users/:id/events", EventsController, :get_events_by_user
     post "/users/:id/events", EventsController, :create
   end
 

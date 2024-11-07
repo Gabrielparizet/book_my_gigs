@@ -9,6 +9,55 @@ defmodule BookMyGigsWeb.EventsController do
   alias BookMyGigsWeb.Events.Schemas
   alias OpenApiSpex.Schema
 
+  operation(:get_public_events,
+    summary: "Get all events",
+    responses: [
+      ok: {"Public Events Response", "application/json", Schemas.PublicEventsResponse}
+    ],
+    ok: "Events successfully found"
+  )
+
+  def get_public_events(conn, _params) do
+    events =
+      Events.get_events()
+      |> Enum.map(&Events.remove_user_from_event/1)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, events)
+  end
+
+  operation(:get_public_event_by_id,
+    summary: "Get public event by id",
+    parameters: [
+      event_id: [
+        in: :path,
+        description: "Event id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"Public_Event_response", "application/json", Schemas.PublicEventResponse}
+    ],
+    ok: "Event successfully found"
+  )
+
+  def get_public_event_by_id(conn, _params) do
+    event_id = conn.params["id"]
+
+    event =
+      event_id
+      |> Events.get_event_by_id()
+      |> Events.remove_user_from_event()
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
+  end
+
   operation(:create,
     summary: "Create an event",
     parameters: [
@@ -33,6 +82,35 @@ defmodule BookMyGigsWeb.EventsController do
     event =
       params
       |> Events.create_event(user_id)
+      |> Jason.encode!()
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, event)
+  end
+
+  operation(:get_events_by_user,
+    summary: "Get all events for a user",
+    parameters: [
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"Events Response", "application/json", Schemas.EventsResponse}
+    ],
+    ok: "Users's events successfully found"
+  )
+
+  def get_events_by_user(conn, _params) do
+    user_id = conn.params["id"]
+
+    event =
+      user_id
+      |> Events.get_events_by_user()
       |> Jason.encode!()
 
     conn

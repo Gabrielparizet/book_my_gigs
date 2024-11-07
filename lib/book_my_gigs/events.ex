@@ -45,9 +45,30 @@ defmodule BookMyGigs.Events do
           }
   end
 
+  def get_events() do
+    Storage.get_events()
+    |> Enum.map(&to_context_struct(&1))
+  end
+
+  def get_event_by_id(event_id) do
+    event_id
+    |> Storage.get_event_by_id()
+    |> to_context_struct()
+  end
+
   def create_event(%{"event" => event_params}, user_id) do
     {:ok, event} = Storage.create_event(event_params, user_id)
     to_context_struct(event)
+  end
+
+  def get_events_by_user(user_id) do
+    user_id
+    |> Storage.get_events_by_user()
+    |> Enum.map(&to_context_struct(&1))
+  end
+
+  def remove_user_from_event(event) do
+    %{event | user: nil, user_id: nil}
   end
 
   defp to_context_struct(%Storage.Event{} = index_db) do
