@@ -79,14 +79,17 @@ defmodule BookMyGigsWeb.EventsController do
   def create(conn, params) do
     user_id = conn.params["id"]
 
-    event =
-      params
-      |> Events.create_event(user_id)
-      |> Jason.encode!()
+    case Events.create_event(params, user_id) do
+      {:ok, event} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(event))
 
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, event)
+      {:error, changeset} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(422, Jason.encode!(%{error: changeset}))
+    end
   end
 
   operation(:get_events_by_user,

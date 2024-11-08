@@ -4,9 +4,9 @@ defmodule BookMyGigsWeb.Accounts.AccountsControllerTest do
 
   import Ecto.Query
 
-  alias BookMyGigsWeb.ApiSpec
-  alias BookMyGigs.Repo
   alias BookMyGigs.Accounts.Storage
+  alias BookMyGigs.Repo
+  alias BookMyGigsWeb.ApiSpec
   alias OpenApiSpex.TestAssertions
 
   def authenticate_user(conn, account) do
