@@ -74,6 +74,7 @@ defmodule BookMyGigsWeb.Router do
     get "/users/:user_id/events/:event_id", EventsController, :get_user_event_by_id
     post "/users/:id/events", EventsController, :create
     put "/users/:user_id/events/:event_id", EventsController, :update_event
+    delete "/users/:user_id/events/:event_id", EventsController, :delete_event
 
     # EVENTS ROUTES
     get "/events/location/:name", EventsController, :get_events_by_location
