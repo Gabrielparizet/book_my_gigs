@@ -237,4 +237,37 @@ defmodule BookMyGigsWeb.EventsController do
     |> put_resp_content_type("application/json")
     |> send_resp(200, event)
   end
+
+  operation(:delete_event,
+    summary: "Delete an event",
+    parameters: [
+      event_id: [
+        in: :path,
+        description: "Event id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ],
+      user_id: [
+        in: :path,
+        description: "User id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: "Event successfully deleted"
+    ],
+    ok: "Event successfully deleted"
+  )
+
+  def delete_event(conn, _params) do
+    event_id = conn.params["event_id"]
+    user_id = conn.params["user_id"]
+
+    response = Events.delete_event(event_id, user_id)
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, response)
+  end
 end

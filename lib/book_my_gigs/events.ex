@@ -112,6 +112,10 @@ defmodule BookMyGigs.Events do
     |> to_context_struct()
   end
 
+  def delete_event(event_id, user_id) do
+    Storage.delete_event(event_id, user_id)
+  end
+
   def remove_user_from_event(event) do
     %{event | user: nil, user_id: nil}
   end

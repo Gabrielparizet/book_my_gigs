@@ -147,6 +147,21 @@ defmodule BookMyGigs.Events.Storage do
     updated_event |> Repo.preload([:location, :type, :genres, :user])
   end
 
+  def delete_event(event_id, user_id) do
+    event =
+      Event
+      |> Repo.get_by(%{id: event_id, user_id: user_id})
+      |> Repo.preload([:location, :type, :genres, :user])
+
+    case Repo.delete(event) do
+      {:ok, _struct} ->
+        "Event successfully deleted"
+
+      {:error, _changeset} ->
+        "Something went wrong"
+    end
+  end
+
   defp get_location_id(location_name) do
     location_name
     |> Locations.get_location_by_city!()
