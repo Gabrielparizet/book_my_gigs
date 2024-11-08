@@ -57,8 +57,13 @@ defmodule BookMyGigs.Events do
   end
 
   def create_event(%{"event" => event_params}, user_id) do
-    {:ok, event} = Storage.create_event(event_params, user_id)
-    to_context_struct(event)
+    case Storage.create_event(event_params, user_id) do
+      {:ok, event} ->
+        {:ok, to_context_struct(event)}
+
+      {:error, changeset} ->
+        {:error, changeset_errors(changeset)}
+    end
   end
 
   def get_events_by_user(user_id) do
@@ -169,6 +174,14 @@ defmodule BookMyGigs.Events do
         nil -> {:error, "An event must have a type"}
         type -> type.name
       end
+    end)
+  end
+
+  defp changeset_errors(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+      Enum.reduce(opts, msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
     end)
   end
 end
