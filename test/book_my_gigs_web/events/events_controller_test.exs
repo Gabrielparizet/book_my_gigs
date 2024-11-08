@@ -74,7 +74,7 @@ defmodule BookMyGigsWeb.Events.EventsControllerTest do
                "date_and_time" => "2024-11-30T00:00:00Z",
                "description" =>
                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-               "genres" => ["Techno", "Electronic"],
+               "genres" => json_data["genres"],
                "id" => json_data["id"],
                "location" => "Paris",
                "title" => "Minor Science: Live at La Gaité Lyrique",
@@ -106,7 +106,7 @@ defmodule BookMyGigsWeb.Events.EventsControllerTest do
             "address" => "3bis Rue Papin, 75003 Paris",
             "url" => "https://www.gaite-lyrique.net/evenement/theodora",
             "type" => "Club",
-            "genres" => ["Techno", "Electronic"]
+            "genres" => ["Electronic", "Techno"]
           }
         }
 
