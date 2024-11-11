@@ -17,10 +17,20 @@ defmodule BookMyGigs.Locations do
     @type id :: String.t()
     @type t :: %__MODULE__{
             id: String.t(),
+            city: String.t(),
             region: String.t(),
             country: String.t(),
             country_code: String.t()
           }
+  end
+
+  def get_locations() do
+    case Storage.get_locations() do
+      {:ok, locations} ->
+        IO.inspect(locations, label: "LOCATIONS")
+        {:ok, Enum.map(locations, &to_context_struct/1)}
+      {:error, msg} -> {:error, msg}
+    end
   end
 
   def get_location_by_city!(city_name) do

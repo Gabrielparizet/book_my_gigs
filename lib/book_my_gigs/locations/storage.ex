@@ -6,6 +6,13 @@ defmodule BookMyGigs.Locations.Storage do
   alias BookMyGigs.Locations.Storage
   alias BookMyGigs.Repo
 
+  def get_locations() do
+    case Repo.all(Storage.Location) do
+      [] -> {:error, "Failed to fetch locations"}
+      locations -> {:ok, locations}
+    end
+  end
+
   def get_location_by_city!(city_name) do
     Repo.get_by(Storage.Location, city: city_name)
   end
