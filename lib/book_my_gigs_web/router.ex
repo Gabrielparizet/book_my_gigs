@@ -42,7 +42,7 @@ defmodule BookMyGigsWeb.Router do
     post "/accounts/sign_in", AccountsController, :sign_in
 
     # LOCATIONS PUBLIC ROUTES
-    get "/locations", LocationsController, :get
+    get "/locations", LocationsController, :get_locations_names
 
     # GENRES PUBLIC ROUTES
     get "/genres", GenresController, :get_genres_names

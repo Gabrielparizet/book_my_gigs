@@ -9,7 +9,7 @@ defmodule BookMyGigsWeb.GenresController do
   alias BookMyGigs.Genres
   alias BookMyGigsWeb.Genres.Schemas
 
-  operation(:get,
+  operation(:get_genres_names,
     summary: "Get all genres",
     responses: [
       ok: {"Genres names response", "application/json", Schemas.GenresNamesResponse}

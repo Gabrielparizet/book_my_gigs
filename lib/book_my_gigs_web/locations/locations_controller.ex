@@ -9,7 +9,7 @@ defmodule BookMyGigsWeb.LocationsController do
   alias BookMyGigs.Locations
   alias BookMyGigsWeb.Locations.Schemas
 
-  operation(:get,
+  operation(:get_locations_names,
     summary: "Get all locations",
     responses: [
       ok: {"Locations response", "application/json", Schemas.LocationsResponse}
@@ -17,14 +17,14 @@ defmodule BookMyGigsWeb.LocationsController do
     ok: "Locations successfully found"
   )
 
-  def get(conn, _params) do
-    case Locations.get_locations() do
-      {:ok, locations} ->
-        {:ok, locations}
+  def get_locations_names(conn, _params) do
+    case Locations.get_locations_names() do
+      {:ok, locations_names} ->
+        {:ok, locations_names}
 
         conn
         |> put_resp_content_type("application/json")
-        |> send_resp(200, Jason.encode!(locations))
+        |> send_resp(200, Jason.encode!(locations_names))
 
       {:error, msg} ->
         response = %{error: msg}
