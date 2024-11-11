@@ -27,9 +27,10 @@ defmodule BookMyGigs.Locations do
   def get_locations() do
     case Storage.get_locations() do
       {:ok, locations} ->
-        IO.inspect(locations, label: "LOCATIONS")
         {:ok, Enum.map(locations, &to_context_struct/1)}
-      {:error, msg} -> {:error, msg}
+
+      {:error, msg} ->
+        {:error, msg}
     end
   end
 

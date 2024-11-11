@@ -44,8 +44,8 @@ defmodule BookMyGigsWeb.Router do
     # LOCATIONS PUBLIC ROUTES
     get "/locations", LocationsController, :get
 
-    # # GENRES PUBLIC ROUTES
-    # get "/genres", GenresController, :get
+    # GENRES PUBLIC ROUTES
+    get "/genres", GenresController, :get
 
     # EVENTS PUBLIC ROUTES
     get "/events", EventsController, :get_public_events

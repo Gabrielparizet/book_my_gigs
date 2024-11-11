@@ -9,7 +9,7 @@ defmodule BookMyGigsWeb.LocationsController do
   alias BookMyGigs.Locations
   alias BookMyGigsWeb.Locations.Schemas
 
-  operation(:get_locations,
+  operation(:get,
     summary: "Get all locations",
     responses: [
       ok: {"Locations response", "application/json", Schemas.LocationsResponse}
