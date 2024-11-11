@@ -41,6 +41,9 @@ defmodule BookMyGigsWeb.Router do
     # SIGN IN TO SESSION
     post "/accounts/sign_in", AccountsController, :sign_in
 
+    # SIGN OUT OF SESSION
+    post "/accounts/sign_out", AccountsController, :sign_out
+
     # LOCATIONS PUBLIC ROUTES
     get "/locations", LocationsController, :get_locations_names
 

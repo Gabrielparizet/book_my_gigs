@@ -170,4 +170,42 @@ defmodule BookMyGigsWeb.AccountsController do
         |> send_resp(401, response)
     end
   end
+
+  operation(:sign_out,
+    summary: "Sign out",
+    parameters: [
+      authorization: [
+        in: :header,
+        description: "Bearer token",
+        type: :string,
+        required: true
+      ]
+    ],
+    responses: [
+      ok: "Successfully signed out",
+      unauthorized: "Invalid token"
+    ]
+  )
+
+  def sign_out(conn, _params) do
+    case get_req_header(conn, "authorization") do
+      ["Bearer " <> token] ->
+        case BookMyGigs.Guardian.sign_out(token) do
+          {:ok, _} ->
+            conn
+            |> put_resp_content_type("application/json")
+            |> send_resp(200, Jason.encode!(%{message: "Successfully signed out"}))
+
+          {:error, _reason} ->
+            conn
+            |> put_resp_content_type("application/json")
+            |> send_resp(401, Jason.encode!(%{error: "Invalid token"}))
+        end
+
+      _ ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(401, Jason.encode!(%{error: "No token provided"}))
+    end
+  end
 end

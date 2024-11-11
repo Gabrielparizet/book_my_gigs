@@ -42,4 +42,14 @@ defmodule BookMyGigs.Guardian do
 
     {:ok, account, token}
   end
+
+  def sign_out(token) do
+    case decode_and_verify(token) do
+      {:ok, _claims} ->
+        {:ok, nil}
+
+      {:error, _reason} ->
+        {:error, :invalid_token}
+    end
+  end
 end

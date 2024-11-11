@@ -44,7 +44,8 @@ defmodule BookMyGigs.Users do
     users = Storage.get_users()
 
     users
-    |> Enum.map(&get_user_location(&1))
+    |> Enum.map(&get_user_location/1)
+    |> Enum.map(&get_user_genres/1)
     |> Enum.map(&to_context_struct/1)
   end
 
