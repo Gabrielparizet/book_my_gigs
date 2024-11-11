@@ -25,6 +25,23 @@ defmodule BookMyGigs.Users.Storage do
     |> Repo.preload(:genres)
   end
 
+  def get_user_by_account_id(account_id) do
+    Storage.User
+
+    case Repo.get_by(Storage.User, account_id: account_id) do
+      nil ->
+        {:error, "No user found for this account"}
+
+      user ->
+        {
+          :ok,
+          user
+          |> Repo.preload(:location)
+          |> Repo.preload(:genres)
+        }
+    end
+  end
+
   def get_user_by_username(username) do
     Repo.get_by(Storage.User, username: username)
     |> Repo.preload(:location)

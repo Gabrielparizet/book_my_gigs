@@ -56,6 +56,7 @@ defmodule BookMyGigsWeb.Router do
     delete "/accounts/:id", AccountsController, :delete
 
     # USERS ROUTES
+    get "/accounts/:id/users", UsersController, :get_user_by_account_id
     get "/users", UsersController, :get
     get "/users/:id", UsersController, :get_user_by_id
     post "/users", UsersController, :create

@@ -275,20 +275,20 @@ defmodule BookMyGigsWeb.Events.EventsControllerTest do
       json_data = json_response(conn_out, 200)
 
       assert json_data == %{
-        "address" => "Updated address",
-        "date_and_time" => "2024-12-02T00:00:00Z",
-        "description" =>
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "genres" => json_data["genres"],
-        "id" => event.id,
-        "location" => "Berlin",
-        "title" => "Updated title",
-        "type" => "Concert",
-        "url" => "https://www.gaite-lyrique.net/evenement/theodora",
-        "user" => "MyUsername",
-        "user_id" => user.id,
-        "venue" => "Updated venue"
-      }
+               "address" => "Updated address",
+               "date_and_time" => "2024-12-02T00:00:00Z",
+               "description" =>
+                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+               "genres" => json_data["genres"],
+               "id" => event.id,
+               "location" => "Berlin",
+               "title" => "Updated title",
+               "type" => "Concert",
+               "url" => "https://www.gaite-lyrique.net/evenement/theodora",
+               "user" => "MyUsername",
+               "user_id" => user.id,
+               "venue" => "Updated venue"
+             }
 
       TestAssertions.assert_schema(json_data, "Event response", api_spec)
     end

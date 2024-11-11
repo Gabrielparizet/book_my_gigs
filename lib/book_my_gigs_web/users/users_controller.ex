@@ -27,6 +27,36 @@ defmodule BookMyGigsWeb.UsersController do
     |> send_resp(200, users)
   end
 
+  operation(:get_user_by_account_id,
+    summary: "Get user by account id",
+    parameters: [
+      account_id: [
+        in: :path,
+        description: "Account id",
+        schema: %Schema{type: :string, format: :uuid},
+        example: "61492a85-3946-4b62-8887-2952af807c26"
+      ]
+    ],
+    responses: [
+      ok: {"User response", "application/json", Schemas.UserResponse}
+    ],
+    ok: "User successfully found"
+  )
+
+  def get_user_by_account_id(conn, _params) do
+    account_id = conn.params["id"]
+
+    response =
+      case Users.get_user_by_account_id(account_id) do
+        {:error, msg} -> msg
+        {:ok, user} -> user
+      end
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(response))
+  end
+
   operation(:get_user_by_id,
     summary: "Get user by id",
     parameters: [

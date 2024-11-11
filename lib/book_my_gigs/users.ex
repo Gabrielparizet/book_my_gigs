@@ -56,6 +56,22 @@ defmodule BookMyGigs.Users do
     |> to_context_struct()
   end
 
+  def get_user_by_account_id(account_id) do
+    case Storage.get_user_by_account_id(account_id) do
+      {:error, msg} ->
+        {:error, msg}
+
+      {:ok, user} ->
+        {
+          :ok,
+          user
+          |> get_user_location()
+          |> get_user_genres()
+          |> to_context_struct()
+        }
+    end
+  end
+
   def get_user_by_username(username) do
     username
     |> Storage.get_user_by_username()
