@@ -48,7 +48,7 @@ defmodule BookMyGigsWeb.UsersController do
 
     response =
       case Users.get_user_by_account_id(account_id) do
-        {:error, msg} -> msg
+        {:error, msg} -> %{error: msg}
         {:ok, user} -> user
       end
 
