@@ -21,10 +21,14 @@ defmodule BookMyGigs.Genres do
           }
   end
 
-  def get_genres() do
+  def get_genres_names() do
     case Storage.get_genres() do
       {:ok, genres} ->
-        {:ok, Enum.map(genres, &to_context_struct/1)}
+        {:ok,
+        genres
+        |> Enum.map(&to_context_struct/1)
+        |> Enum.map(&(&1.name))
+      }
 
       {:error, msg} ->
         {:error, msg}

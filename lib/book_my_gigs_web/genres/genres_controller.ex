@@ -12,19 +12,19 @@ defmodule BookMyGigsWeb.GenresController do
   operation(:get,
     summary: "Get all genres",
     responses: [
-      ok: {"Genres response", "application/json", Schemas.GenresResponse}
+      ok: {"Genres names response", "application/json", Schemas.GenresNamesResponse}
     ],
     ok: "Genres successfully found"
   )
 
-  def get(conn, _params) do
-    case Genres.get_genres() do
-      {:ok, genres} ->
-        {:ok, genres}
+  def get_genres_names(conn, _params) do
+    case Genres.get_genres_names() do
+      {:ok, genres_names} ->
+        {:ok, genres_names}
 
         conn
         |> put_resp_content_type("application/json")
-        |> send_resp(200, Jason.encode!(genres))
+        |> send_resp(200, Jason.encode!(genres_names))
 
       {:error, msg} ->
         response = %{error: msg}
