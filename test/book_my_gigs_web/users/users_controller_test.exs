@@ -50,17 +50,62 @@ defmodule BookMyGigsWeb.Users.UsersControllerTest do
       {:ok, user} = Users.get_user_by_account_id(account.id)
 
       assert json_data == %{
-        "id" => user.id,
-        "location" => nil,
-        "username" => "johndo2000",
-        "account_id" => account.id,
-        "genres" => [],
-        "first_name" => "John",
-        "last_name" => "Doe",
-        "birthday" => "2000-01-01"
-      }
+               "id" => user.id,
+               "location" => nil,
+               "username" => "johndo2000",
+               "account_id" => account.id,
+               "genres" => [],
+               "first_name" => "John",
+               "last_name" => "Doe",
+               "birthday" => "2000-01-01"
+             }
 
       TestAssertions.assert_schema(user_payload, "User response", api_spec)
+    end
+
+    test "fails to create a user when a username is already taken", %{conn: conn} do
+      account_1 =
+        %Accounts.Storage.Account{
+          email: "test@gmail.com",
+          password: "ThisIsMyPassword123"
+        }
+        |> Repo.insert!()
+
+      _user_1 =
+        %Users.Storage.User{
+          account_id: account_1.id,
+          username: "johndo2000",
+          first_name: "John",
+          last_name: "Doe",
+          birthday: ~D[1969-08-26]
+        }
+        |> Repo.insert!()
+
+      account_2 =
+        %Accounts.Storage.Account{
+          email: "test2@gmail.com",
+          password: "ThisIsMyPassword123"
+        }
+        |> Repo.insert!()
+
+      user2_payload = %{
+        "user" => %{
+          "username" => "johndo2000",
+          "first_name" => "John",
+          "last_name" => "Doe",
+          "birthday" => "01/01/2000"
+        }
+      }
+
+      conn_out =
+        conn
+        |> authenticate_user(account_2)
+        |> put_req_header("content-type", "application/json")
+        |> post("/api/users", user2_payload)
+
+      json_data = json_response(conn_out, 422)
+
+      assert json_data == %{"error" => %{"username" => ["has already been taken"]}}
     end
   end
 end

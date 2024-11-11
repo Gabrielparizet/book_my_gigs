@@ -82,9 +82,11 @@ defmodule BookMyGigs.Users do
   end
 
   def create_user(%{"user" => user_params}, account_id) do
-    user_params
-    |> Storage.create_user(account_id)
-    |> to_context_struct()
+    case Storage.create_user(user_params, account_id) do
+      {:ok, user} -> {:ok, to_context_struct(user)}
+      {:error, :account_not_found} -> {:error, :account_not_found}
+      {:error, changeset} -> {:error, changeset_errors(changeset)}
+    end
   end
 
   def update_user(
@@ -250,6 +252,14 @@ defmodule BookMyGigs.Users do
             genre.name
           end)
       end
+    end)
+  end
+
+  defp changeset_errors(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+      Enum.reduce(opts, msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
     end)
   end
 end
