@@ -20,7 +20,6 @@ defmodule BookMyGigsWeb.UsersController do
   def get(conn, _params) do
     users =
       Users.get_users()
-      |> IO.inspect(label: "HERE")
       |> Jason.encode!()
 
     conn
