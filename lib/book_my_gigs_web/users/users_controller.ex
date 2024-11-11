@@ -20,7 +20,6 @@ defmodule BookMyGigsWeb.UsersController do
   def get(conn, _params) do
     users =
       Users.get_users()
-      |> IO.inspect(label: "HERE")
       |> Jason.encode!()
 
     conn
@@ -108,14 +107,22 @@ defmodule BookMyGigsWeb.UsersController do
   def create(conn, params) do
     account_id = conn.private[:guardian_default_resource].id
 
-    user =
-      params
-      |> Users.create_user(account_id)
-      |> Jason.encode!()
+    case Users.create_user(params, account_id) do
+      {:ok, user} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(user))
 
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, user)
+      {:error, :account_not_found} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(401, Jason.encode!(%{error: "Unauthorized"}))
+
+      {:error, changeset_errors} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(422, Jason.encode!(%{error: changeset_errors}))
+    end
   end
 
   operation(:update,

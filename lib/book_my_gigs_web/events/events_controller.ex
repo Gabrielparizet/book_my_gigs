@@ -85,10 +85,10 @@ defmodule BookMyGigsWeb.EventsController do
         |> put_resp_content_type("application/json")
         |> send_resp(200, Jason.encode!(event))
 
-      {:error, changeset} ->
+      {:error, changeset_errors} ->
         conn
         |> put_resp_content_type("application/json")
-        |> send_resp(422, Jason.encode!(%{error: changeset}))
+        |> send_resp(422, Jason.encode!(%{error: changeset_errors}))
     end
   end
 

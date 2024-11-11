@@ -66,9 +66,10 @@ defmodule BookMyGigs.Users.Storage do
 
         case Repo.insert(changeset) do
           {:ok, user} ->
-            user
-            |> Repo.preload(:location)
-            |> Repo.preload(:genres)
+            {:ok,
+             user
+             |> Repo.preload(:location)
+             |> Repo.preload(:genres)}
 
           {:error, changeset} ->
             {:error, changeset}
