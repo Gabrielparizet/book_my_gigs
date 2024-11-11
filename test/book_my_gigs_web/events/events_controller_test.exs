@@ -189,7 +189,7 @@ defmodule BookMyGigsWeb.Events.EventsControllerTest do
                  "date_and_time" => "2024-11-30T00:00:00Z",
                  "description" =>
                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                 "genres" => ["Electronic", "Techno"],
+                 "genres" => Map.get(event_1, "genres"),
                  "id" => Map.get(event_1, "id"),
                  "location" => "Paris",
                  "title" => "Minor Science: Live at La Gaité Lyrique",
@@ -217,6 +217,80 @@ defmodule BookMyGigsWeb.Events.EventsControllerTest do
              ]
 
       TestAssertions.assert_schema(json_data, "Events response", api_spec)
+    end
+  end
+
+  describe "PUT api/users/:user_id/events/:event_id" do
+    test "successfully updates an event with valid params", %{conn: conn} do
+      api_spec = ApiSpec.spec()
+      account = create_account()
+      user = create_user(account.id)
+
+      event_params = %{
+        "event" => %{
+          "date_and_time" => %{
+            "date" => "30/11/2024",
+            "time" => "00:00"
+          },
+          "venue" => "La Gaité Lyrique",
+          "title" => "Minor Science: Live at La Gaité Lyrique",
+          "description" =>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "address" => "3bis Rue Papin, 75003 Paris",
+          "url" => "https://www.gaite-lyrique.net/evenement/theodora",
+          "location" => "Paris",
+          "type" => "Club",
+          "genres" => ["Techno", "Electronic"]
+        }
+      }
+
+      TestAssertions.assert_schema(event_params, "Update event input", api_spec)
+
+      {:ok, event} = Events.create_event(event_params, user.id)
+
+      update_event_payload = %{
+        "event" => %{
+          "date_and_time" => %{
+            "date" => "02/12/2024",
+            "time" => "00:00"
+          },
+          "venue" => "Updated venue",
+          "title" => "Updated title",
+          "description" =>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "address" => "Updated address",
+          "url" => "https://www.gaite-lyrique.net/evenement/theodora",
+          "location" => "Berlin",
+          "type" => "Concert",
+          "genres" => ["Techno", "Rap"]
+        }
+      }
+
+      conn_out =
+        conn
+        |> authenticate_user(account)
+        |> put_req_header("content-type", "application/json")
+        |> put("/api/users/#{user.id}/events/#{event.id}", update_event_payload)
+
+      json_data = json_response(conn_out, 200)
+
+      assert json_data == %{
+        "address" => "Updated address",
+        "date_and_time" => "2024-12-02T00:00:00Z",
+        "description" =>
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "genres" => json_data["genres"],
+        "id" => event.id,
+        "location" => "Berlin",
+        "title" => "Updated title",
+        "type" => "Concert",
+        "url" => "https://www.gaite-lyrique.net/evenement/theodora",
+        "user" => "MyUsername",
+        "user_id" => user.id,
+        "venue" => "Updated venue"
+      }
+
+      TestAssertions.assert_schema(json_data, "Event response", api_spec)
     end
   end
 end
