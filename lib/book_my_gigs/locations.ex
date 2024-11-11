@@ -28,10 +28,9 @@ defmodule BookMyGigs.Locations do
     case Storage.get_locations() do
       {:ok, locations} ->
         {:ok,
-        locations
-        |> Enum.map(&to_context_struct/1)
-        |> Enum.map(&(&1.city))
-      }
+         locations
+         |> Enum.map(&to_context_struct/1)
+         |> Enum.map(& &1.city)}
 
       {:error, msg} ->
         {:error, msg}
