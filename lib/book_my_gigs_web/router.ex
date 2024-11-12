@@ -91,6 +91,7 @@ defmodule BookMyGigsWeb.Router do
 
     # EVENTS ROUTES
     get "/events/location/:name", EventsController, :get_events_by_location
+    get "/events", EventsController, :get_public_events
   end
 
   # Other scopes may use custom stacks.
