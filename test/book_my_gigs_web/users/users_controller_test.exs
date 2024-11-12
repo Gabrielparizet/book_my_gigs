@@ -140,5 +140,24 @@ defmodule BookMyGigsWeb.Users.UsersControllerTest do
 
       assert json_data == %{"error" => %{"account_id" => ["has already been taken"]}}
     end
+
+    test "fails when user is unauthenticated", %{conn: conn} do
+      user_payload = %{
+        "user" => %{
+          "username" => "petetheman",
+          "first_name" => "Pete",
+          "last_name" => "Sampras",
+          "birthday" => "12/08/1972"
+        }
+      }
+
+      conn_out =
+        conn
+        |> put_req_header("content-type", "application/json")
+        |> post("/api/users", user_payload)
+
+      assert conn_out.status == 401
+      assert conn_out.resp_body == "{\"message\":\"unauthenticated\"}"
+    end
   end
 end
