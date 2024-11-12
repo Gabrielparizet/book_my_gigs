@@ -159,5 +159,31 @@ defmodule BookMyGigsWeb.Users.UsersControllerTest do
       assert conn_out.status == 401
       assert conn_out.resp_body == "{\"message\":\"unauthenticated\"}"
     end
+
+    test "fails when user_payload is invalid or incomplete", %{conn: conn} do
+      account = create_account()
+
+      user_payload = %{
+        "user" => %{
+          "last_name" => "Sampras",
+          "birthday" => "12/08/1972"
+        }
+      }
+
+      conn_out =
+        conn
+        |> authenticate_user(account)
+        |> put_req_header("content-type", "application/json")
+        |> post("/api/users", user_payload)
+
+      json_data = json_response(conn_out, 422)
+
+      assert json_data == %{
+               "error" => %{
+                 "first_name" => ["can't be blank"],
+                 "username" => ["can't be blank"]
+               }
+             }
+    end
   end
 end

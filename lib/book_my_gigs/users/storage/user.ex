@@ -31,7 +31,7 @@ defmodule BookMyGigs.Users.Storage.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :first_name, :last_name, :birthday, :account_id, :location_id])
-    |> validate_required([:username, :account_id])
+    |> validate_required([:username, :account_id, :first_name, :last_name, :birthday])
     |> validate_length(:username, min: 6, max: 20)
     |> validate_birthday()
     |> unique_constraint(:username)
