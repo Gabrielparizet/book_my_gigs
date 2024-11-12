@@ -55,7 +55,6 @@ defmodule BookMyGigs.Events.Storage.Event do
     ])
     |> validate_length(:description, max: 3000)
     |> validate_url(:url)
-    |> unique_constraint(:url)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:location_id)
     |> foreign_key_constraint(:type_id)

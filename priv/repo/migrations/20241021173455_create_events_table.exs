@@ -22,6 +22,5 @@ defmodule BookMyGigs.Repo.Migrations.CreateEventsTable do
     create index(:events, [:location_id])
     create index(:events, [:date_and_time])
     create index(:events, [:type_id])
-    create unique_index(:events, [:url])
   end
 end
