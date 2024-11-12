@@ -50,6 +50,9 @@ defmodule BookMyGigsWeb.Router do
     # GENRES PUBLIC ROUTES
     get "/genres", GenresController, :get_genres_names
 
+    # TYPES PUBLIC ROUTES
+    get "/types", TypesController, :get_types_names
+
     # EVENTS PUBLIC ROUTES
     get "/events", EventsController, :get_public_events
     get "/events/:id", EventsController, :get_public_event_by_id
