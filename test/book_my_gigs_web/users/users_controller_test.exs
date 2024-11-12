@@ -107,5 +107,38 @@ defmodule BookMyGigsWeb.Users.UsersControllerTest do
 
       assert json_data == %{"error" => %{"username" => ["has already been taken"]}}
     end
+
+    test "fails when trying to create a second user for the same account", %{conn: conn} do
+      account = create_account()
+
+      _user_1 =
+        %Users.Storage.User{
+          account_id: account.id,
+          username: "johndo2000",
+          first_name: "John",
+          last_name: "Doe",
+          birthday: ~D[1969-08-26]
+        }
+        |> Repo.insert!()
+
+      user_2_payload = %{
+        "user" => %{
+          "username" => "petetheman",
+          "first_name" => "Pete",
+          "last_name" => "Sampras",
+          "birthday" => "12/08/1972"
+        }
+      }
+
+      conn_out =
+        conn
+        |> authenticate_user(account)
+        |> put_req_header("content-type", "application/json")
+        |> post("/api/users", user_2_payload)
+
+      json_data = json_response(conn_out, 422)
+
+      assert json_data == %{"error" => %{"account_id" => ["has already been taken"]}}
+    end
   end
 end

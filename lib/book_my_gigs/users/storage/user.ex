@@ -35,6 +35,7 @@ defmodule BookMyGigs.Users.Storage.User do
     |> validate_length(:username, min: 6, max: 20)
     |> validate_birthday()
     |> unique_constraint(:username)
+    |> unique_constraint(:account_id)
     |> foreign_key_constraint(:account_id)
     |> foreign_key_constraint(:location_id)
   end
