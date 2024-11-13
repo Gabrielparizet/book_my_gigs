@@ -25,14 +25,15 @@ defmodule BookMyGigs.Types do
     case Storage.get_types() do
       {:ok, types} ->
         {:ok,
-        types
-        |> Enum.map(&to_context_struct/1)
-        |> Enum.map(& &1.name)}
+         types
+         |> Enum.map(&to_context_struct/1)
+         |> Enum.map(& &1.name)}
 
       {:error, msg} ->
         {:error, msg}
     end
   end
+
   def get_type_by_name(name) do
     name
     |> Storage.get_type_by_name()

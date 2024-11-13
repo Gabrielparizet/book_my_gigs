@@ -8,7 +8,7 @@ defmodule BookMyGigsWeb.Events.Schemas.PublicEventsResponse do
   require OpenApiSpex
 
   OpenApiSpex.schema(%{
-    title: "Events response",
+    title: "Public Events response",
     description: "Valid response when fetching multiple events",
     type: :array,
     items: %Schema{

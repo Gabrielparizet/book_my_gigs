@@ -1,6 +1,6 @@
 defmodule BookMyGigsWeb.Genres.Schemas.GenresNamesResponse do
   @moduledoc """
-  Specs describing the valid response when fetching locations
+  Specs describing the valid response when fetching genres
   """
 
   alias OpenApiSpex.Schema

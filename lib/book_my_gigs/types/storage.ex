@@ -12,6 +12,7 @@ defmodule BookMyGigs.Types.Storage do
       types -> {:ok, types}
     end
   end
+
   def get_type_by_name(type_name) do
     Repo.get_by(Storage.Type, name: type_name)
   end
